@@ -1,0 +1,5 @@
+<svg id="clock" xmlns="http://www.w3.org/2000/svg" width="35.669" height="35.669" viewBox="0 0 35.669 35.669">
+  <path id="Path_43" data-name="Path 43" d="M24.972,13.486a1.486,1.486,0,1,0-2.972,0v7.431a1.5,1.5,0,0,0,.594,1.189l5.945,4.459a1.486,1.486,0,0,0,1.783-2.378l-5.35-4.013Z" transform="translate(-5.652 -3.083)" fill="#fff"/>
+  <path id="Path_44" data-name="Path 44" d="M18.348,2A16.348,16.348,0,1,0,34.7,18.348,16.348,16.348,0,0,0,18.348,2ZM4.972,18.348A13.376,13.376,0,1,1,18.348,31.724,13.377,13.377,0,0,1,4.972,18.348Z" transform="translate(-0.514 -0.514)" fill="#fff" fill-rule="evenodd"/>
+  <path id="Path_45" data-name="Path 45" d="M0,0H35.669V35.669H0Z" fill="none"/>
+</svg>

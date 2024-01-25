@@ -1,0 +1,196 @@
+url = "/"
+layout = "default"
+title = "OBSGESSION"
+is_hidden = 0
+meta_description = "homepage desc"
+seo_keywords = "keywords"
+robot_index = "index"
+robot_follow = "follow"
+
+[article_highlights]
+maxItems = 3
+title = "Latest news"
+baseUrl = "/news"
+templates = "template4"
+thumb_width = 440
+thumb_height = 235
+
+[jumbotron vision]
+jumbotron = "vision"
+title = 0
+background = "transperant"
+templates = "template1"
+description_limit = 0
+
+[jumbotron mission]
+jumbotron = "mission"
+title = 0
+background = "transperant"
+templates = "template1"
+description_limit = 0
+
+[jumbotron goals]
+jumbotron = "goals"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+
+[jumbotron numbers]
+jumbotron = "project-numbers"
+title = 1
+background = "transperant"
+templates = "template1"
+description_limit = 0
+
+==
+<?php
+
+use Pensoft\Articles\Models\Article;
+use Pensoft\Partners\Models\Partners as Partner;
+
+function onStart(){
+    //supporting
+    $this['coordinating_partners'] = Partner::where('type', 4)->get();
+    //main
+    $this['consortium_partners'] = Partner::where('type', 1)->get();
+
+    $this['news'] = Article::news()->where('published_at', '<=', 'now()')->where('published', 'true')->orderBy('published_at', 'DESC')->take(10)->get();
+}
+?>
+==
+
+<div class="background_bubble1"></div>
+<div class="background_bubble2"></div>
+<div class="background_bubble3"></div>
+<div class="background_bubble4"></div>
+
+<!-- vision -->
+<div class="container-fluid vision">
+    <div class="container">
+        <div class="background"></div>
+        <div class="row between-md around-xs middle-xs">
+            <div class="col-sm-5 col-xs-12 center-xs ">
+                <h2>Vision</h2>
+            </div>
+            <div class="col-sm-7 col-xs-12">
+                {% component 'vision' %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- mission -->
+<div class="container-fluid mission">
+    <div class="container">
+        <div class="background"></div>
+        <div class="row between-md around-xs middle-xs">
+
+            <div class="col-sm-7 col-xs-12 ">
+                {% component 'mission' %}
+            </div>
+            <div class="col-sm-5 col-xs-12 center-xs">
+                <h2>Mission</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- goals -->
+<div class="container-fluid goals">
+    <div class="container">
+        <div class="background"></div>
+        <div class="row between-md around-xs middle-xs">
+            <div class="col-sm-5 col-xs-12 center-xs">
+                <h2>Goals</h2>
+            </div>
+            <div class="col-sm-7 col-xs-12 ">
+                {% component 'goals' %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- numbers -->
+<div class="numbers_container">
+    {% component 'numbers' %}
+</div>
+
+
+<!-- latest from news -->
+<div class="container highlights-news">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="display-1">Latest news</h1>
+        </div>
+    </div>
+    <div class="row newslist">
+        <div class="col-xs-12">
+            {% if news.count > 3 %}
+            <div id="slick_news">
+                {% endif %}
+                {% for highlight in news %}
+                <div class="slide">
+                    <div class="col-xs-12 col-md-4 news-item item-{{highlight.slug}}">
+                        <div class="row news_column">
+                            <a href="{{'news'|page}}/{{highlight.slug}}">
+                                <div class="news_image">
+                                    <img class="news-img-top" src="{{ highlight.cover|crop_image|resize(290, 293, {'mode': 'crop'}) }}" />
+                                </div>
+                                <div class="news-container">
+                                    <div class="news-title">
+                                        <h3 class="card-title">{{highlight.title}}</h3>
+                                    </div>
+                                    <div class="read_more">Read more</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% if news.count > 3 %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+    <div class="row container middle-xs between-xs">
+        <div class="col-xs-12 center-xs mb-1 mt-2"><h1 class="display-1">Coordination</h1></div>
+        <div class="col-xs-12 center-xs coordinating_partners">
+            {% for c in coordinating_partners %}
+            <a href="{{c.instituion_url}}" target="_blank">
+                <img alt="{{ c.instituion }}" src="{{c.cover.thumb(auto,118,{'mode':'crop'})}}"></a>
+
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row container middle-xs between-xs">
+        <div class="col-xs-12 center-xs mb-1 mt-2"><h1 class="display-1">Consortium</h1></div>
+        <div class="col-xs-12 center-xs consortium_partners">
+            <div id="slick">
+                {% for c in consortium_partners %}
+                <div class="slide">
+                    <div class="partner_logo"><a href="{{c.instituion_url}}" target="_blank">
+                        <img alt="{{ c.instituion }}" src="{{c.cover.thumb(auto,90,{'mode':'crop'})}}"></a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% if this.theme.subscribe %}
+<div class="container-fluid bg-secondary mt-4">
+    <div class="subscribe_background1"></div>
+    <div class="subscribe_background2"></div>
+    <div class="row container subscribe-newsletter-background">
+        <div class="col-xs-12 center-xs mt-2 mb-1"><h1>SIGN UP TO OUR NEWSLETTER AND STAY UP TO DATE!</h1></div>
+        <div class="col-xs-12 center-xs"><a href="{{this.theme.subscribe}}" class="btn btn-primary" target="_blank">Subscribe to newsletter</a></div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,106 @@
+[menu links_menu]
+start = "id-7"
+activeNode = 0
+listItemClasses = "footer-menu-item"
+primaryClasses = "footer-menu"
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 1
+
+[menu events_menu]
+start = "id-8"
+activeNode = 0
+listItemClasses = "footer-menu-item"
+primaryClasses = "footer-menu"
+secondaryClasses = "dropdown-menu"
+numberOfLevels = 1
+
+[jumbotron footer_funds_text]
+jumbotron = "funding-footer-text"
+background = "transperant"
+templates = "template1"
+description_limit = 0
+
+[jumbotron]
+jumbotron = "footer-funds-logos"
+background = "transperant"
+templates = "template3"
+description_limit = 0
+==
+<div class="container-fluid border-box dark-background">
+    <div class="container">
+        <div class="row top-xs between-xs footer-menu-container">
+            <div class="col-md-7 col-xs-12 footer-right-border">
+                <div class="footer_funds_logos">
+                    {% component 'jumbotron' %}
+                </div>
+                <div class="funding-text col-xs-12">
+                    {% component 'footer_funds_text' %}
+                </div>
+                <div class="col-xs-12 powered-by-container">
+                    <div class="row middle-xs">
+                        <div class="col-md-3 col-xs-12 start-md center-xs nowrap">
+                            <a href="{{'privacy-policy'|page}}">Privacy policy</a>
+                        </div>
+
+                        <div class="col-md-9 col-xs-12 start-md center-xs nowrap">
+                            <div class="powered-by my-1 my-lg-0 px-1 end-sm center-xs nowrap">
+                                <span>Designed and powered by</span> <a href="https://pensoft.net/" target="_blank">
+                                <img class="pensoft_logo" src="{{ 'assets/images/pensoft-logo.svg'|theme }}" /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-xs-12">
+                <div class="row between-xs">
+                    <div class="col-xs-12 col-md-4 start-md center-xs col-sm-6 start-sm">
+                        <div class="head">Contact</div>
+                        <ul class="footer-menu">
+                            <li class="footer-menu-item "><a href="mailto:project@mail">project@mail</a></li>
+                        </ul>
+
+                        <div class="head hidden-xs">FOLLOW OBSGESSION</div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 start-md center-xs col-sm-6 start-sm">
+                        <div class="head">LINKS</div>
+                        {% component 'links_menu' %}
+                    </div>
+                    <div class="col-xs-12 col-md-4 start-md center-xs col-sm-6 start-sm">
+                        <div class="head hidden-xs">&nbsp;</div>
+                        {% component 'events_menu' %}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-xs-12">
+                        <div class="social_links">
+                            {% if this.theme.twitter %}
+                            <a href="{{this.theme.twitter_url}}" target="_blank" class="pr p-twitter big"></a>
+                            {% endif %}
+                            {% if this.theme.facebook %}
+                            <a href="{{this.theme.facebook_url}}" target="_blank" class="pr p-facebook big"></a>
+                            {% endif %}
+                            {% if this.theme.linkedin %}
+                            <a href="{{this.theme.linkedin_url}}" target="_blank" class="pr p-linkedin big"></a>
+                            {% endif %}
+                            {% if this.theme.youtube %}
+                            <a href="{{this.theme.youtube_url}}" target="_blank" class="pr p-youtube big"></a>
+                            {% endif %}
+                            {% if this.theme.instagram %}
+                            <a href="{{this.theme.instagram_url}}" target="_blank" class="pr p-instagram big"></a>
+                            {% endif %}
+                            {% if this.theme.researchgate %}
+                            <a href="{{this.theme.researchgate_url}}" target="_blank" class="pr p-researchgate big"></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-xs-12 start-md center-xs">
+                        {% if this.theme.subscribe %}
+                        <a href="{{this.theme.subscribe}}" class="footer_subscribe" target="_blank">Subscribe to newsletter</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

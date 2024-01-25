@@ -1,0 +1,8 @@
+<svg id="arrow_circle_down" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <g id="arrow_circle_down-2" data-name="arrow_circle_down" transform="translate(48) rotate(90)">
+    <g id="Group_17" data-name="Group 17">
+      <path id="Path_52" data-name="Path 52" d="M24,38.4A14.4,14.4,0,1,1,38.4,24,14.417,14.417,0,0,1,24,38.4m0,2.4A16.8,16.8,0,1,0,7.2,24,16.785,16.785,0,0,0,24,40.8ZM25.2,24V16.8H22.8V24h-6L24,31.2,31.2,24Z" fill="#173a3d"/>
+    </g>
+    <path id="Path_53" data-name="Path 53" d="M0,0H48V48H0Z" fill="none"/>
+  </g>
+</svg>
