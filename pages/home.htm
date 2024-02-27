@@ -41,10 +41,8 @@ title = 1
 background = "transperant"
 templates = "template1"
 description_limit = 0
-
 ==
 <?php
-
 use Pensoft\Articles\Models\Article;
 use Pensoft\Partners\Models\Partners as Partner;
 
@@ -58,7 +56,6 @@ function onStart(){
 }
 ?>
 ==
-
 <div class="background_bubble1"></div>
 <div class="background_bubble2"></div>
 <div class="background_bubble3"></div>
@@ -66,8 +63,9 @@ function onStart(){
 
 <!-- vision -->
 <div class="container-fluid vision">
+    <div class="background"></div>
     <div class="container">
-        <div class="background"></div>
+        
         <div class="row between-md around-xs middle-xs">
             <div class="col-sm-5 col-xs-12 center-xs ">
                 <h2>Vision</h2>
@@ -80,8 +78,9 @@ function onStart(){
 </div>
 <!-- mission -->
 <div class="container-fluid mission">
+    <div class="background"></div>
     <div class="container">
-        <div class="background"></div>
+        
         <div class="row between-md around-xs middle-xs">
 
             <div class="col-sm-7 col-xs-12 ">
@@ -97,8 +96,9 @@ function onStart(){
 
 <!-- goals -->
 <div class="container-fluid goals">
+    <div class="background"></div>
     <div class="container">
-        <div class="background"></div>
+        
         <div class="row between-md around-xs middle-xs">
             <div class="col-sm-5 col-xs-12 center-xs">
                 <h2>Goals</h2>
@@ -117,7 +117,7 @@ function onStart(){
     {% component 'numbers' %}
 </div>
 
-
+{% if news.count > 0 %}
 <!-- latest from news -->
 <div class="container highlights-news">
     <div class="row">
@@ -127,16 +127,15 @@ function onStart(){
     </div>
     <div class="row newslist">
         <div class="col-xs-12">
-            {% if news.count > 3 %}
             <div id="slick_news">
-                {% endif %}
                 {% for highlight in news %}
                 <div class="slide">
                     <div class="col-xs-12 col-md-4 news-item item-{{highlight.slug}}">
                         <div class="row news_column">
-                            <a href="{{'news'|page}}/{{highlight.slug}}">
+                            <a href="">
                                 <div class="news_image">
-                                    <img class="news-img-top" src="{{ highlight.cover|crop_image|resize(290, 293, {'mode': 'crop'}) }}" />
+                                    <!--<img class="news-img-top" src="{{ highlight.cover|crop_image|resize(290, 293, {'mode': 'crop'}) }}" />-->
+                                    <img class="news-img-top" src="{{ highlight.cover.path }}" />
                                 </div>
                                 <div class="news-container">
                                     <div class="news-title">
@@ -149,20 +148,19 @@ function onStart(){
                     </div>
                 </div>
                 {% endfor %}
-                {% if news.count > 3 %}
             </div>
-            {% endif %}
         </div>
     </div>
 </div>
+{% endif %}
 
 
     <div class="row container middle-xs between-xs">
-        <div class="col-xs-12 center-xs mb-1 mt-2"><h1 class="display-1">Coordination</h1></div>
+        <div class="col-xs-12 center-xs"><h1 class="display-1">Coordination</h1></div>
         <div class="col-xs-12 center-xs coordinating_partners">
             {% for c in coordinating_partners %}
             <a href="{{c.instituion_url}}" target="_blank">
-                <img alt="{{ c.instituion }}" src="{{c.cover.thumb(auto,118,{'mode':'crop'})}}"></a>
+                <img alt="{{ c.instituion }}" src="{{c.cover.thumb(342,140,{'mode':'crop'})}}"></a>
 
             {% endfor %}
         </div>

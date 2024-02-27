@@ -387,7 +387,7 @@ $(document).ready(function() {
             centerMode: true,
             variableWidth: true,
             infinite: true,
-            slidesToShow: 3,
+            slidesToShow: 1,
             responsive: [
                 {
                     breakpoint: 768,
