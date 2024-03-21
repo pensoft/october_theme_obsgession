@@ -66,13 +66,16 @@
         color: @dark-color;
         text-transform: none;
         margin-bottom: 10px;
-        .breakpoint-laptop-down({
-            font-size: 20px!important;
+        .breakpoint-large-down({
+            text-align: center!important;
         });
     }
     .contact_affiliation{
         font-size: 20px;
         color: @link-color;
+        .breakpoint-large-down({
+            text-align: center!important;
+        });
     }
 }
 
@@ -105,22 +108,7 @@
 
 .profile-item{
     margin-bottom: 40px;
-    i{
-        &.p-location{
-            margin-left: -6px;
-            font-size: 40px;
-        }
-    }
 
-    p:not(.card_title){
-        margin-bottom: 10px!important;
-        display: flex;
-        align-items: center;
-    }
-
-    .contact_address{
-        align-items: center!important;
-    }
 
     .coordinator_image{
         display: flex;

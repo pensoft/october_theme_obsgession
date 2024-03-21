@@ -52,7 +52,7 @@ function onStart(){
     //main
     $this['consortium_partners'] = Partner::where('type', 1)->get();
 
-    $this['news'] = Article::news()->where('published_at', '<=', 'now()')->where('published', 'true')->orderBy('published_at', 'DESC')->take(5)->get();
+    $this['news'] = Article::news()->where('published_at', '<=', 'now()')->where('published', 'true')->orderBy('published_at', 'DESC')->take(10)->get();
 }
 ?>
 ==

@@ -87,18 +87,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        //i{
-        //    line-height: unset!important;
-        //}
-        //.p-download:before{
-        //
-        //}
-        //
-        //.breakpoint-large-down({
-        //    right: 0;
-        //    top: 0;
-        //});
+        .breakpoint-large-down({
+            position: relative;
+            top: unset;
+            bottom: unset;
+            right: unset;
+            margin-top: 20px!important;
+        });
     }
 }
 
@@ -340,10 +335,13 @@
             margin-left: 0px;
             width: 100%;
             padding: 5px 0;
+            text-align: center;
             &.active{
                 width:fit-content;
                 border-bottom:3px solid @dark-color !important;
                 color: @grey-color;
+                text-align: center;
+                margin: 0 auto;
             }
         });
 

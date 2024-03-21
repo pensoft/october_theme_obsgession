@@ -37,11 +37,6 @@
         font-size: 20px;
         color: @text-color-default;
     }
-
-    .breakpoint-small-down({
-        width: 100%;
-        height: auto;
-    });
 }
 
 .flyer-container{
@@ -59,6 +54,7 @@
     justify-content: center;
     .breakpoint-large-down({
         justify-content: space-evenly;
+        margin-bottom: 50px;
     });
     form{
         width: fit-content;
@@ -88,6 +84,10 @@
     border-radius: 20px;
     padding: 30px;
 
+    .breakpoint-large-down({
+        width: auto;
+    });
+
     .card-title{
         font-size: 25px;
     }
@@ -101,6 +101,11 @@
     .btn{
         padding: 10px 25px;
         margin-right: 20px;
+        .breakpoint-large-down({
+            margin-right: 0;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+        });
     }
 }
 
