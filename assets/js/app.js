@@ -130,23 +130,6 @@ $(document).ready(function() {
     $("nav").removeClass("no-transition");
 
 
-    $('body').on('click', '.work_packages .accordion-toggle, .partners_list_container .accordion-toggle, .messages .accordion-toggle, .training-head', function () {
-        $('.ui-accordion-header').show();
-        if ($(this).next(".accordion-content, .training-body").is(':visible')) {
-            $(this).next(".accordion-content, .training-body").slideUp(300);
-            // $(this).children().find(".plusminus").text('+');
-            $(this).children(".plusminus").html('<span class="plus"></span>');
-        } else {
-            $(this).next(".accordion-content, .training-body").slideDown(300);
-            // $(this).children().find(".plusminus").text('-');
-            $(this).children(".plusminus").html('<span class="minus"></span>');
-        }
-    });
-
-    $('.work_packages, .accordion-content, .partners_list_container .accordion-toggle, .messages .accordion-toggle').each(function( index, value ) {
-        $(value).find('a').attr( "onclick", "window.open(this.href, '_blank');" )
-    });
-
 
 	onHashChange();
 	$(window).on("hashchange", function() {
@@ -204,6 +187,9 @@ $(document).ready(function() {
 	$('.broshure_and_poster img').attr('data-aos', 'fade-up');
 	$('.card-container').attr('data-aos', 'fade-up');
 	$('.coordinator_image').attr('data-aos', 'fade-up');
+	$('.objectives ul li').attr('data-aos', 'fade-up');
+	$('.the_project').attr('data-aos', 'fade-right');
+	$('.the_project2').attr('data-aos', 'fade-left');
 
 	$('.see_all_partners_link').hide();
 
@@ -221,6 +207,29 @@ $(document).ready(function() {
         return (innerWidth - $('.container').width())/2 + more;
     });
 
+    // if (width >= 1024) {
+    //     $('.partners_list .key_1, .partners_list .key_3, .partners_list .key_5, .partners_list .key_7, .partners_list .key_9, .partners_list .key_11, .partners_list .key_13, .partners_list .key_15, .partners_list .key_17, .partners_list .key_19').wrapAll('<div class="col-md-6 col-xs-12" />');
+    //     $('.partners_list .key_0, .partners_list .key_2, .partners_list .key_4, .partners_list .key_6, .partners_list .key_8, .partners_list .key_10, .partners_list .key_12, .partners_list .key_14, .partners_list .key_16, .partners_list .key_18').wrapAll('<div class="col-md-6 col-xs-12" />');
+    // }
+
+
+    $( window ).on( "load", function() {
+        $(".projects_services .accordion-border").each(function(k, v) {
+            $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active");
+            $(this).removeClass("ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active");
+        });
+
+        $('.projects_services .col-md-6').each(function(k, v){
+            $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active");
+        });
+        $('.projects_services .col-md-6').hover(function (){
+            $(this).removeClass('ui-state-hover');
+        });
+        $('.projects_services .col-md-6').click(function (){
+            $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active ui-state-focus");
+        });
+    } );
+
 
     $('<div class="col-xs-12 col-sm-3 card internal no-border" style="margin-bottom: 15px">\n' +
         '<a class="folder-background" style="display:flex; background: url(/storage/app/media/working-documents-live.svg) center center no-repeat; background-size: 100px; height: 200px" href="https://fondationbiodiversite.sharepoint.com/sites/OBSGESSION/Documents%20partages/Forms/AllItems.aspx" target="_blank" title="Working documents (live)"></a>\n' +
@@ -232,108 +241,95 @@ $(document).ready(function() {
         '<h3 class="card-header"><a href="/internal-repository/reporting-forms" title="Forms">Reporting forms</a></h3>\n' +
         '</div>').insertAfter($('.card.internal:nth-child(5)'));
 
-    $('body').on('click', '#mycomponentpartners .accordion-toggle, .accordion-insider-members-list .accordion-toggle', function () {
-        if ($(this).next(".accordion-content").is(':visible')) {
-            $(this).next(".accordion-content").slideUp(300);
-            $(this).children(".plusminus").html('<span>Members</span><span class="plus"></span>');
-        } else {
-            $(this).next(".accordion-content").slideDown(300);
-            $(this).children(".plusminus").html('<span>Members</span><span class="minus"></span>');
-        }
-    });
-
     $('<div class="mark"></div>').insertAfter($('.group-holder input'));
 
-    $('.tabs').each(function(){
-        // For each set of tabs, we want to keep track of
-        // which tab is active and its associated content
-        var $active, $content, $links = $(this).find('a');
-        var speed = "fast";
-        var activeTab = $(location.hash);
-        // If the location.hash matches one of the links, use that as the active tab.
-        // If no match is found, use the first link as the initial active tab.
-        $active = $($links.filter("[href=\'"+location.hash+"\']")[0] || $links[0]);
-
-        if($(this).parent().parent().hasClass('events')){
-            $active.addClass('active');
-        }
-
-        $content = $($active[0].hash);
-
-        // Hide the remaining content
-        $links.not($active).each(function () {
-            $(this.hash).hide();
-        });
-
-        if(activeTab.length){
-            $content.slideDown(speed);
-            //scroll to element
-            $('html, body').animate({
-                scrollTop:  activeTab.offset().top + $('header').height()
-            }, speed);
-        }
-
-        // Bind the click event handler
-        $(this).find("a").click(function (e) {
-
-                if($(this).hasClass('active')) {
-                    $content.slideDown({
-                        scrollTop: $content.offset().top - $('header').height()
-                    }, speed);
-                    var screenSize = getScreenSize();
-                    if (screenSize.width < 800) {
-                        // scroll to element
-                        $('html, body').animate({
-                            scrollTop: $content.offset().top - $('header').height() + 200  // mobile
-                        }, speed);
-                    }else{
-                        //scroll to element icons top
-                        $('html, body').animate({
-                            scrollTop:  $content.offset().top + $('header').height() + 800
-                        }, speed);
-                    }
-                    e.preventDefault();
-                    return false;
-                }
-                // Make the old tab inactive.
-                $active.removeClass('active');
-                // $content.slideUp({
-                // 	scrollTop: $content.offset().top - $('header').height() - $('.left_sidebar').height()
-                // }, speed);
-                $content.hide();
-
-                // Update the variables with the new link and content
-                $active = $(this);
-                $content = $(this.hash);
-
-                location.hash = $active[0].hash;
-
-                // Make the tab active.
-                $active.addClass('active');
-                $content.slideDown({
-                    scrollTop: $content.offset().top - $('header').height()
-                }, speed);
-                var screenSize = getScreenSize();
-                if (screenSize.width < 800) {
-                	// scroll to element
-                	$('html, body').animate({
-                		scrollTop: $content.offset().top - $('header').height() + 200 // mobile
-                	}, speed);
-                }else{
-                	//scroll to element icons top
-                	$('html, body').animate({
-                		scrollTop:  $content.offset().top - $('header').height() + 300
-                	}, speed);
-                }
-
-                $('.library .library-item .btn.btn-primary').text('Download');
-                // Prevent the anchor\'s default click action
-                e.preventDefault();
-            });
-
-    });
-
-
+    // $('.tabs').each(function(){
+    //     // For each set of tabs, we want to keep track of
+    //     // which tab is active and its associated content
+    //     var $active, $content, $links = $(this).find('a');
+    //     var speed = 500;
+    //     var activeTab = $(location.hash);
+    //     var screenSize = getScreenSize();
+    //     // If the location.hash matches one of the links, use that as the active tab.
+    //     // If no match is found, use the first link as the initial active tab.
+    //     $active = $($links.filter("[href=\'"+location.hash+"\']")[0] || $links[0]);
+    //
+    //     if($(this).parent().parent().hasClass('events')){
+    //         $active.addClass('active');
+    //     }
+    //
+    //     $content = $($active[0].hash);
+    //
+    //     // Hide the remaining content
+    //     $links.not($active).each(function () {
+    //         $(this.hash).hide();
+    //     });
+    //
+    //     if(activeTab.length){
+    //         $content.slideDown(speed);
+    //         //scroll to element
+    //         $('html, body').animate({
+    //             scrollTop:  activeTab.offset().top - $('header').height()  - 300
+    //         }, speed);
+    //     }
+    //
+    //     // Bind the click event handler
+    //     $(this).find("a").click(function (e) {
+    //         if($(this).hasClass('active')) {
+    //             $content.slideDown({
+    //                 scrollTop: $content.offset().top - $('header').height()
+    //             }, speed);
+    //
+    //             if (screenSize.width < 800) {
+    //                 // scroll to element
+    //                 $('html, body').animate({
+    //                     scrollTop: $content.offset().top - $('header').height() - 300  // mobile
+    //                 }, speed);
+    //             }
+    //             // else{
+    //             //     //scroll to element icons top
+    //             //     $('html, body').animate({
+    //             //         scrollTop:  $content.offset().top - $('header').height()
+    //             //     }, speed);
+    //             // }
+    //             e.preventDefault();
+    //             return false;
+    //         }
+    //         // Make the old tab inactive.
+    //         $active.removeClass('active');
+    //         // $content.slideUp({
+    //         // 	scrollTop: $content.offset().top - $('header').height() - $('.left_sidebar').height()
+    //         // }, speed);
+    //         $content.hide();
+    //
+    //         // Update the variables with the new link and content
+    //         $active = $(this);
+    //         $content = $(this.hash);
+    //
+    //         location.hash = $active[0].hash;
+    //
+    //         // Make the tab active.
+    //         $active.addClass('active');
+    //         $content.slideDown({
+    //             scrollTop: $content.offset().top - $('header').height()
+    //         }, speed);
+    //         if (screenSize.width < 800) {
+    //             // scroll to element
+    //             $('html, body').animate({
+    //                 scrollTop: $content.offset().top - $('header').height() - 300  // mobile
+    //             }, speed);
+    //         }
+    //         // else{
+    //         //     //scroll to element icons top
+    //         //     $('html, body').animate({
+    //         //         scrollTop:  $content.offset().top - $('header').height()
+    //         //     }, speed);
+    //         // }
+    //
+    //         // Prevent the anchor\'s default click action
+    //         e.preventDefault();
+    //     });
+    // });
 
 
     // bootstrap 3 breakpoints
@@ -382,115 +378,176 @@ $(document).ready(function() {
         });
     }
 
-    if($('#slick_news').length){
-        $('#slick_news').slick({
-            centerMode: true,
-            variableWidth: true,
-            infinite: true,
-            slidesToShow: 1,
-            responsive: [
-                {
-                    breakpoint: 768,
-                    settings: {
-                        arrows: false,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 3
+    if (width > 990) { // desktop
+        if ($('#slick_news').length) {
+            $('#slick_news').slick({
+                centerMode: true,
+                variableWidth: true,
+                infinite: true,
+                slidesToShow: 3,//TODO
+                responsive: [
+                    {
+                        breakpoint: 768,
+                        settings: {
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 3
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            arrows: false,
+                            centerMode: true,
+                            centerPadding: '40px',
+                            slidesToShow: 1
+                        }
                     }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        arrows: false,
-                        centerMode: true,
-                        centerPadding: '40px',
-                        slidesToShow: 1
-                    }
+                ]
+            });
+        }
+    }
+
+    $('body').on('click', '.work_packages .accordion-toggle, .messages .accordion-toggle', function () {
+        if ($(this).next(".accordion-content").is(':visible')) {
+            $(this).next(".accordion-content").slideUp(300);
+            $(this).children().find(".plusminus").text('+');
+            $(this).children(".plusminus").html('<span class="plus"></span>');
+        } else {
+            $(this).next(".accordion-content").slideDown(300);
+            $(this).children().find(".plusminus").text('-');
+            $(this).children(".plusminus").html('<span class="minus"></span>');
+        }
+    });
+
+    $('.work_packages .accordion-content, .pilots .accordion-content, .messages .accordion-toggle').each(function( index, value ) {
+        $(value).find('a').attr( "onclick", "window.open(this.href, '_blank');" )
+    });
+
+    $('.nav-item').children("a").each(function(){
+        if($(this).attr('data-toggle') == 'dropdown'){
+            $(this).removeAttr('data-toggle')
+        }
+    });
+
+    $("nav").removeClass("no-transition");
+
+    if (window.location.hash) {
+        var link = window.location.hash;
+        var anchorId = link.substr(link.indexOf("#") + 1);
+        if($("#"+anchorId).offset()){
+            $('html, body').animate({
+                scrollTop: $("#"+anchorId).offset().top - 150
+            }, 500);
+        }else{
+            $('.accordion-border').each(function(){
+                var title = $(this).find(".accordion-toggle .col-xs.start-xs").text().toUpperCase();
+                var toggler = $(this).find(".accordion-toggle");
+                if ( title.indexOf(anchorId.toUpperCase()) >= 0 && !toggler.next(".accordion-content").is(':visible') ){
+                    $('html, body').animate({
+                        scrollTop: toggler.parent().offset().top - 150
+                    }, 500);
+                    toggler.trigger( "click" );
                 }
-            ]
-        });
+            });
+        }
     }
 
-    $('.library .library-item .btn.btn-primary').text('Download');
+    $('.dropdown a').click(function(event) {
+
+        if (location.href.indexOf("#") != -1) {
+            var link = $(this).attr('href');
+            var anchorId = link.substr(link.indexOf("#") + 1);
+            if($("#"+anchorId).length>0){
+                $('html, body').animate({
+                    scrollTop: $("#"+anchorId).offset().top - 150
+                }, 500);
+            }else{
+                // event.preventDefault();
+                $("path[title='"+anchorId.toUpperCase()+"']").addClass('active_path');
+
+                $('.accordion-border').each(function(){
+                    var title = $(this).find(".accordion-toggle .col-xs.start-xs").text().toUpperCase();
+                    var toggler = $(this).find(".accordion-toggle");
+                    if ( title.indexOf(anchorId.toUpperCase()) >= 0 && !toggler.next(".accordion-content").is(':visible') ){
+                        $('html, body').animate({
+                            scrollTop: toggler.parent().offset().top - 150
+                        }, 500);
+                        toggler.trigger( "click" );
+                        event.preventDefault();
+                    }
+                });
+            }
+        }
 
 
+    });
+
+
+    $('.work_packages .accordion-content, .messages .accordion-toggle').each(function( index, value ) {
+        $(value).find('a').attr( "onclick", "window.open(this.href, '_blank');" )
+    });
+
+    $(".partner_description a").click(function() {
+        var $el, $ps, $up, totalHeight;
+        totalHeight = 75;
+        $el = $(this) // read-more link
+
+        $up  = $el.parent(); // partner_description
+        if ($el.text() == "Read more") {
+
+            $ps = $up.find(".partner_content p");
+
+            // measure how tall inside should be by adding together heights of all inside paragraphs (except read-more paragraph)
+            $ps.each(function() {
+                totalHeight += $(this).outerHeight();
+            });
+
+
+            $up.addClass('changed');
+
+            $el.css({
+                top: totalHeight - 14
+            });
+            $up.css({
+                // Set height to prevent instant jumpdown when max height is removed
+                "height": $up.height() - 45,
+                "max-height": 9999,
+            })
+                .animate({
+                    "height": totalHeight
+                });
+            //Stuff to do when btn is in the read more state
+            $el.html("<a href=\"javascript:void(0);\">Read less</a>");
+            // $up.slideDown();
+        } else {
+
+            $up.removeClass('changed');
+
+            $el.css({
+                top: 100
+            });
+
+            $up.css({
+                // Set height to prevent instant jumpdown when max height is removed
+                "height": $up.height(),
+                "max-height": 460,
+            })
+                .animate({
+                    "height": totalHeight + 65
+                });
+            //Stuff to do when btn is in the read less state
+            $el.html("<a href=\"javascript:void(0);\">Read more</a>");
+
+            $('html, body').animate({
+                scrollTop:  $up.offset().top - $('header').height()
+            });
+        }
+        return false;
+
+    });
 });
-
-function expandReadMore(el){
-    var $el, $ps, $up, totalHeight;
-
-    totalHeight = 115;
-
-    $el = $(el) // read-more link
-
-    $up  = $el.parent(); // coordinator_info
-
-    if ($el.text() == "Read more") {
-
-        $ps = $up.find("p:not('.read-more')");
-
-        // measure how tall inside should be by adding together heights of all inside paragraphs (except read-more paragraph)
-        $ps.each(function() {
-            totalHeight += $(this).outerHeight();
-        });
-
-        $up.addClass('changed');
-
-        $el.css({
-            top: totalHeight - 120
-        });
-        // $el.html('<a class="revert" href="" onclick="revertChanges(this);">Read less</a>');
-
-        $up.css({
-            // Set height to prevent instant jumpdown when max height is removed
-            "height": $up.height(),
-            "max-height": 9999,
-        })
-            .animate({
-                "height": totalHeight
-            });
-
-        //Stuff to do when btn is in the read more state
-        $el.html("Read less");
-        // $up.slideDown();
-    } else {
-
-        $up.removeClass('changed');
-
-        $el.css({
-            top: 53
-        });
-        // $el.html('<a class="revert" href="" onclick="revertChanges(this);">Read less</a>');
-
-        $up.css({
-            // Set height to prevent instant jumpdown when max height is removed
-            "height": $up.height(),
-            "max-height": 460,
-        })
-            .animate({
-                "height": totalHeight
-            });
-        //Stuff to do when btn is in the read less state
-        $el.html("Read more");
-
-        $('html, body').animate({
-            scrollTop:  $up.offset().top - $('header').height() - 300
-        });
-
-        // $up.slideUp();
-    }
-
-
-
-
-
-    // fade out read-more
-    // $up.fadeOut();
-
-    // prevent jump-down
-    return false;
-}
-
 
 function animateNumbers() {
     if (isScrolledIntoView($(".numbers")) && !viewed) {
@@ -572,12 +629,36 @@ function appendSearchAndSocialMedia(){
 	menu.find('>ul').append(liSearch).append(liSocial);
 }
 
-function redirectAndRefresh(url){
-	$(".tabs a").each(function() {
-		this.href = window.location.hash;
-	});
-	window.open(url, '_blank');
-	location.reload();
+// function redirectAndRefresh(url){
+// 	$(".tabs a").each(function() {
+// 		this.href = window.location.hash;
+// 	});
+// 	window.open(url, '_blank');
+// 	location.reload();
+// }
+
+function getScreenSize() {
+    var myHeight = 0;
+    var myWidth = 0;
+    if (window.innerWidth && window.innerHeight) {
+        // Netscape & Mozilla
+        myHeight = window.innerHeight;
+        myWidth = window.innerWidth;
+    } else if (document.documentElement && (document.documentElement.clientWidth || document.documentElement.clientHeight)) {
+        // IE > 6
+        myHeight = document.documentElement.clientHeight;
+        myWidth = document.documentElement.clientWidth;
+    } else if (document.body.offsetWidth && document.body.offsetHeight) {
+        // IE = 6
+        myHeight = document.body.offsetHeight;
+        myWidth = document.body.offsetWidth;
+    } else if (document.body.clientWidth && document.body.clientHeight) {
+        // IE < 6
+        myHeight = document.body.clientHeight;
+        myWidth = document.body.clientWidth;
+    }
+
+    return {'width': myWidth, 'height': myHeight};
 }
 
 function isBreakpointLarge() {
@@ -586,24 +667,19 @@ function isBreakpointLarge() {
 
 
 function showSearchForm(){
-    // if ($(".search").is(':visible')) {
-    // 	$('#menu').show();
-    // } else {
-    // 	$(".search").slideDown(300);
-    // 	$('#menu').hide();
-    // }
-    // $('#menu').hide();
     $('#layout-header').toggleClass('full-width');
     $('#search').toggle();
-    $('#menu').hide();
-    $('nav a:not(.navbar-brand)').hide();
+    $('.navbar a.p-search').css('visibility', 'hidden');
+    // $('#menu li').hide();
+    // $('nav a:not(.navbar-brand)').hide();
 }
 
 function hideSearchForm(){
     $('#layout-header').toggleClass('full-width');
     $('#search').hide();
-    $('#menu').show();
-    $('nav a').show();
+    $('.navbar a.p-search').css('visibility', 'visible');
+    // $('#menu li').show();
+    // $('nav a').show();
 }
 
 function requestFormLibrary() {
@@ -1060,8 +1136,8 @@ function init() {
 
     });
     // appendProfile()
-    appendSignIn()
-    appendSignOut()
+    // appendSignIn()
+    // appendSignOut()
 }
 
 

@@ -4,19 +4,15 @@ title = "Contact"
 is_hidden = 0
 robot_index = "index"
 robot_follow = "follow"
+header_image = "Contact.png"
 
 [siteSearchInclude]
-
-[jumbotron]
-jumbotron = "contact"
-background = "#ffffff"
-templates = "template2"
-description_limit = 0
 ==
 <?php
 use Pensoft\Cardprofiles\Models\Profiles;
 
 function onStart(){
+    $this['loggedIn'] = !empty(\BackendAuth::getUser()) ? true : false;
 	$this['profiles'] =  Profiles::where('category_id', 1)->get();
 }
 ?>
@@ -24,24 +20,36 @@ function onStart(){
 {% component 'siteSearchInclude' %}
 
 <div class="container">
-    <div class="row contacts_page around-md around-xs mt-2 mb-2">
+    <div class="row profile-item-container">
         {% for profile in profiles %}
-        <div class="col-md-6 col-xs-12 profile-item">
+        <div class="col-xs-12 col-lg-6 profile-item">
+            <div class="contact_info row">
+                <div class="col-md-3 col-xs-12 coordinator_image center-xs center-md" data-aos="fade-up">
+                    {% if profile.avatar %}
+                    <img src="{{profile.avatar.thumb(176, 176, {'mode':'crop'})}}" class="fr-fic fr-dii">
+                    {% else %}
+                    <img alt="{{ profile.names }}" src="{{ 'avatar.svg'|media }}" class="no-image">
+                    {% endif %}
+                </div>
+                <div class="col-md col-xs-12 coordinator_info">
 
-            <div class="contact_info row center-xs">
-                <div class="coordinator_image aos-init aos-animate" data-aos="fade-up">
-                    <img src="{{profile.avatar.thumb(191, 191, {'mode':'crop'})}}"></div>
-                <div class="coordinator_info">
-                    <h3>{{profile.names}}</h3>
-                    {% if profile.position %}<p class="card_title">{{profile.position}}</p>{% endif %}
-                    {% if profile.department %}<p class="contact_affiliation">{{profile.department}}</p>{% endif %}
-                    {% if profile.address %}<p class="contact_address">{{profile.address}}</p>{% endif %}
-                    {% if profile.content %}<p class="contact_address">{{profile.content|raw}}</p>{% endif %}
-                    {% if profile.email %}<p class="contact_mail"><a href="mailto:{{profile.email}}">{{profile.email}}</a></p>{% endif %}
-                    {% if profile.phone %}<p class="contact_phone">{{profile.phone}}</p>{% endif %}
+                    <h2>{{profile.names}}</h2>
+                    {% if profile.position %}<p class="contact_affiliation">{{profile.position}}</p>{% endif %}
+<!--                    {% if profile.department %}<p class="contact_affiliation">{{profile.department}}</p>{% endif %}-->
+                    <!--                    {% if profile.address %}<p class="contact_address"><i class="pr big p-location"></i>{{profile.address}}</p>{% endif %}-->
+                    <!--                    {% if profile.content %}<p class="contact_address">{{profile.content|raw}}</p>{% endif %}-->
+                    <!--                    {% if profile.phone %}<p class="contact_phone"><i class="pr big p-phone"></i>{{profile.phone}}</p>{% endif %}-->
+
+                    {% if loggedIn %}
+                    <p><a class="edit-link" href="/admin/pensoft/cardprofiles/profiles/update/{{profile.id}}" target="_blank">Edit</a></p>
+                    {% endif %}
+
                 </div>
             </div>
+            {% if profile.email %}<div class="mail_info"><a href="mailto:{{profile.email}}">{{profile.email}}</a></div>{% endif %}
+
         </div>
         {% endfor %}
     </div>
+
 </div>

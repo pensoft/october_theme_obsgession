@@ -1,4 +1,4 @@
-url = "/media-center/videos"
+url = "/videos"
 layout = "default"
 title = "Videos"
 is_hidden = 0
@@ -49,55 +49,59 @@ flush();
 readfile($file_name);
 exit();
 }
-return Redirect::to('/media-center/videos');
+return Redirect::to('/videos');
 }
+}
+
+
+function onDownloadFile(){
+$file = File::find(post('id'));
+$pathToFile = $file->getLocalPath();
+$fileName = $file->file_name;
+$fileType = $file->content_type;
+$headers = [
+'HTTP/1.1 200 OK',
+'Pragma: public',
+'Content-Type: '.$fileType,
+'Content-Type: application/force-download'
+];
+
+return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
 
 {% set records = mediaVideosList %}
 
-{% if records.count %}
 <div class="container">
+    {% if records.count() %}
     <div class="row">
         {% for record in records %}
-        {# Use spaceless tag to remove spaces inside the A tag. #}
-        {% spaceless %}
-        <div class="col-md-6 col-xs-12">
-            <div class="">
-                <p class="card_title font-weight-bold">{{record.name}}</p>
-                {% if record.file %}
-                <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
+        <div class="col-md-4 col-xs-12">
+            <p class="card_title">{{ record.name|length > 65 ? record.name|striptags|slice(0, 65)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.name|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</p>
+            {% if record.file %}
+            <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
+            <p align="center"><a class=" btn btn-primary" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}">Download</a></p>
 
-                <p>Attachment: {{record.file.file_name}}, {{record.file.size}}</p>
+            {% endif %}
 
-                <p><a class=" btn btn-primary" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}">Download</a></p>
+            {% if record.youtube_url %}
+            <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="422"></iframe>
 
-                {% endif %}
+            <p>&nbsp;</p>
+            {% endif %}
 
-                {% if record.youtube_url %}
-                <iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" src="{{record.youtube_url}}" width="100%" height="422"></iframe>
-
-                <p>&nbsp;</p>
-                {% endif %}
-
-                {% if record.vimeo_url %}
-                <iframe width="100%" height="422" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        src="{{record.vimeo_url}}">
-                </iframe>
-                <p>&nbsp;</p>
-                {% endif %}
-            </div>
+            {% if record.vimeo_url %}
+            <iframe width="100%" height="422" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                    src="{{record.vimeo_url}}">
+            </iframe>
+            <p>&nbsp;</p>
+            {% endif %}
         </div>
 
-
-
-
-        {% endspaceless %}
-
+        {% else %}
+        {{ noRecordsMessage }}
         {% endfor %}
     </div>
+    {% endif %}
 </div>
-{% else %}
-
-{% endif %}

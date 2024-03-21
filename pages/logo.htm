@@ -1,5 +1,5 @@
 title = "Logo"
-url = "/media-center/logo"
+url = "/logo"
 layout = "default"
 is_hidden = 0
 robot_index = "index"
@@ -43,8 +43,23 @@ flush();
 readfile($file_name);
 exit();
 }
-return Redirect::to('/media-center/logo');
+return Redirect::to('/logo');
 }
+}
+
+function onDownloadFile(){
+$file = File::find(post('id'));
+$pathToFile = $file->getLocalPath();
+$fileName = $file->file_name;
+$fileType = $file->content_type;
+$headers = [
+'HTTP/1.1 200 OK',
+'Pragma: public',
+'Content-Type: '.$fileType,
+'Content-Type: application/force-download'
+];
+
+return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
@@ -58,33 +73,46 @@ return Redirect::to('/media-center/logo');
     {% set detailsKeyColumn = mediaLogosList.detailsKeyColumn %}
     {% set detailsUrlParameter = mediaLogosList.detailsUrlParameter %}
 
-    <div class="row card-container-row mb-4 start-xs">
-        {% for record in records %}
-        {# Use spaceless tag to remove spaces inside the A tag. #}
-        {% spaceless %}
-        {% if record.logo_image %}
-        <div class="col-md-3 col-xs-12 center-xs">
-            <p class="logo_container"><img src="{{record.logo_image.path}}" title="{{record.name}}"></p>
-            <div class="col-xs-12">
-                <div class="text-center">
-                    <b>Download {{record.name}}</b> <br><br>
+    {% if records.count() %}
+        <div class="row">
+            {% for record in records %}
+            {% spaceless %}
+            {% if record.logo_image %}
+
+            <div class="col-md-4 col-xs-12">
+                <div class="logo-container {{record.name}}">
+                    <img src="{{record.logo_image.path}}" title="{{record.name}}">
+                </div>
+                <p align="center">Download {{record.name}}</p>
+                <div class="links">
                     {% if record.file_jpg %}
-                    <a href="{{ ''| page }}?{{queries}}&download={{record.file_jpg.id}}&file_name={{record.file_jpg.file_name|replace({' ': '_'})}}" title="Logo pack" class="btn btn-primary"><i class="pr p-download"></i>  JPG</a> &nbsp;
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_jpg.id}}" name="id">
+                    <button type="submit" data-attach-loading class="btn btn-primary">JPG</button>
+                    {{ form_close() }}
                     {% endif %}
+
                     {% if record.file_png %}
-                    <a href="{{ ''| page }}?{{queries}}&download={{record.file_png.id}}&file_name={{record.file_png.file_name|replace({' ': '_'})}}" title="Logo pack" class="btn btn-primary"><i class="pr p-download"></i>  PNG</a> &nbsp;
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_png.id}}" name="id">
+                    <button type="submit" data-attach-loading class="btn btn-primary">PNG</button>
+                    {{ form_close() }}
                     {% endif %}
+
                     {% if record.file_eps %}
-                    <a href="{{ ''| page }}?{{queries}}&download={{record.file_eps.id}}&file_name={{record.file_eps.file_name|replace({' ': '_'})}}" title="Logo pack" class="btn btn-primary"><i class="pr p-download"></i>  SVG</a>
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file_eps.id}}" name="id">
+                    <button type="submit" data-attach-loading class="btn btn-primary">SVG</button>
+                    {{ form_close() }}
                     {% endif %}
                 </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-        {% endspaceless %}
-        {% else %}
-        {{ noRecordsMessage }}
-        {% endfor %}
-    </div>
+            {% endspaceless %}
+            {% else %}
+            {{ noRecordsMessage }}
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>

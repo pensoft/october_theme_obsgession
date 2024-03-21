@@ -1,198 +1,160 @@
-.media-btn_broshure_and_poster{
+.content_flyer,
+.content_press,
+.content_video,
+.content_newsletter,
+.content_logo{
+    display: flex;
     .breakpoint-large-down({
-        margin: 10px 0!important;
+        justify-content: center;
     });
+
+
 }
 
-.newsletter_title{
-    position: absolute;
-    color: @white-color;
-    display: block;
-    width: 302px;
-    text-align: center;
-    margin-top: 85px;
-    .breakpoint-large-down({
-        width: 100%;
-    });
-}
-
-.newsletter_item{
-    text-align: center;
-    .breakpoint-large-down({
-        margin-top: 50px;
-    });
-}
-
-.broshure_and_poster img, .newsletter_item img{
-    border-radius: 50%;
-}
-
-.media_center_container{
-    background: url("../../assets/images/media_center.svg") top center no-repeat;
-    background-size: auto 345px;
-    padding-top: 85px;
-}
-
-.media_label{
-    color: @default-color;
-    display: block;
-    margin: 20px auto;
-    font-size: 20px;
-    font-weight: bold;
-    &:hover{
-        opacity: 0.7;
-    }
-}
-
-.bg_media{
-    background: url("../../assets/images/media-centre.svg") right no-repeat;
-    background-size: auto 530px;
-    .breakpoint-large-down({
-        background: url("../../assets/images/media-centre.svg") bottom center no-repeat;
-        background-size: contain;
-        padding-bottom: 200px;
-    });
-}
-
-
-
-.back-to{
-    color: @link-color;
-}
-
-.press-releases .link a{
-    margin-right: 20px;
-}
-
-.press-relieses-container{
-    .date{
-        color: @link-color;
-    }
-    .press-relies-item{
-        background: @secondary-color;
-        padding: 30px!important;
-        margin: 30px 0!important;
-        color: @dark-color!important;
-        font-size: 16px;
-        .rounded(20px);
-        position: relative;
-    }
-}
-
-.media-center{
-
-    .card_border{
-        background-color: @secondary-color;
-        transition: all 0.5s;
-        padding: 40px;
-        border-radius: 50%;
-        height: 76px;
-        width: 76px;
-        margin:  0 auto;
-        &:hover{
-            background-color: @link-color;
-        }
+.flyer-container,
+.logo-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 357px;
+    max-width: 100%;
+    height: 253px;
+    background-color: @secondary-color;
+    margin: 0 auto 20px auto;
+    box-shadow: 0px 0px 6px #00000029;
+    border-radius: 20px;
+    &.white{
+        background-color: @dark-color;
     }
 
-    .card_image_container{
-        height: 76px;
-        width: 76px;
-        display: block;
-        margin: 0 auto;
-        background-size: contain;
+    img {
+        width: 75%;
+        height: 75%;
+        object-fit: contain;
     }
 
-
-    .container{
-        padding-bottom: 0;
-        .row{
-            margin-bottom: 0;
-        }
-    }
-
-    .btn-primary{
-        .breakpoint-huge-down({
-            padding: 0 10px!important;
-        });
-    }
-    //form{
-    //    display: inline-flex;
-    //    button{
-    //        padding: 5px 10px!important;
-    //        margin: 0 5px;
-    //    }
-    //}
-
-    .p-download{
-        font-size: 13px;
-    }
-
-    .date{
-        color: @green-color;
-    }
-}
-
-.logo,
-.presentation{
-    .card_image_container{
-        height: 312px;
-        width: 246px;
-        border-radius: 20px;
-        display: block;
-        margin: 0 auto;
-    }
-
-    .card_title{
+    p{
         font-size: 20px;
-        font-weight: bold;
-        height: 3em;
+        color: @text-color-default;
     }
 
-    .card-container{
-        flex-direction: column!important;
-        display: block;
-        height: unset;
-        width: unset;
-        text-align: left;
-        margin: 0;
-
-        .card_border{
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            border: 27px solid #D6CBC8;
-            display: flex;
-            align-items: center;
-            margin: 0 auto;
-            padding: 0;
-            //transition: all 0.1s;
-            //-webkit-transition: all 0.1s;
-        }
-    }
-
-    .col-md-3{
-        padding: 20px;
-    }
-    .col-md-3{
-        .logo_container{
-            background: @secondary-color;
-            border-radius: 50%;
-            padding: 40px;
-            width: 200px;
-            height: 200px;
-            display: flex;
-            align-items: center;
-
-        }
-    }
-
-
+    .breakpoint-small-down({
+        width: 100%;
+        height: auto;
+    });
 }
 
-.flyer, .newsletters{
-    img{
-        height: 260px;
+.flyer-container{
+    background-color: @white-color;
+    img {
+        width: 90%;
+        height: 90%;
         object-fit: contain;
     }
 }
 
+.links{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .breakpoint-large-down({
+        justify-content: space-evenly;
+    });
+    form{
+        width: fit-content;
+    }
+    button{
+        padding: 10px 30px 10px 45px;
+        border-radius: 20px;
+        font-size: 18px;
+        background: @link-color url("../../assets/images/download-icon.svg") no-repeat;
+        background-size: 20px;
+        background-position: 22px 12px;
+        margin: 0 3px;
+        &:hover{
+            opacity: 0.7;
+        }
+    }
+}
+
+
+
+.press-relies-item{
+    width: 100%;
+    max-width: 100%;
+    background-color: @white-color;
+    margin: 0 auto 20px auto;
+    box-shadow: 0px 0px 6px #00000029;
+    border-radius: 20px;
+    padding: 30px;
+
+    .card-title{
+        font-size: 25px;
+    }
+
+    .date{
+        font-size: 18px;
+        color: @green-color;
+        text-transform: uppercase;
+    }
+
+    .btn{
+        padding: 10px 25px;
+        margin-right: 20px;
+    }
+}
+
+
+
+.flyer_image_container{
+    width: auto;
+    height: auto;
+    text-align: left;
+    img{
+        border: 1px solid #c1c1c1;
+    }
+}
+
+
+
+.video-title{
+    color: @dark-color;
+
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px!important;
+    margin-bottom: 20px!important;
+}
+
+.videos{
+
+    iframe, video{
+        width: 357px;
+        max-width: 100%;
+        height: 253px;
+        background-color: @secondary-color;
+        margin: 0 auto 20px auto;
+        box-shadow: 0px 0px 6px #00000029;
+        border-radius: 20px;
+        display: flex;
+        align-self: center;
+    }
+
+    .card_title{
+        text-align: center;
+        font-size: 20px;
+        font-weight: normal;
+    }
+    .btn{
+        padding: 10px 30px 10px 45px;
+        border-radius: 20px;
+        font-size: 18px;
+        background: @link-color url("../../assets/images/download-icon.svg") no-repeat;
+        background-size: 20px;
+        background-position: 22px 12px;
+        margin: 0 3px;
+        &:hover{
+            opacity: 0.7;
+        }
+    }
+}

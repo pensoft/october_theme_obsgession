@@ -7,53 +7,90 @@ seo_keywords = "keywords"
 robot_index = "index"
 robot_follow = "follow"
 
-[siteSearchInclude]
+[jumbotron the_project]
+jumbotron = "project"
+title = 1
+background = "transperant"
+templates = "template1"
+description_limit = 0
 
-[jumbotron background]
-jumbotron = "background"
+[jumbotron the_project2]
+jumbotron = "project-second-paragraph"
 title = 0
 background = "transperant"
 templates = "template1"
 description_limit = 0
 
-[jumbotron backgroundblue]
-jumbotron = "background-blue"
+[jumbotron objectives]
+jumbotron = "obsgessions-mission-centered-around-5-primary-objectives"
+title = 1
 background = "transperant"
 templates = "template1"
 description_limit = 0
 
-[jumbotron background3]
-jumbotron = "background-3"
-background = "transperant"
-templates = "template1"
-description_limit = 0
+[siteSearchInclude]
 
-[jumbotron background4]
-jumbotron = "background-4"
-background = "transperant"
-templates = "template1"
-description_limit = 0
-==
-<?php
-use Pensoft\Accordions\Models\Item;
-
-function onStart(){
-    $this['accorions'] = Item::where('category_id', 1)->get();
-}
-?>
+[accordion]
+maxItems = 10
+accordion = 1
+elementId = "structure"
+active = 5
+collapsible = "false"
+heightStyle = "content"
+iconsHeader = "ui-icon-triangle-1-e"
+iconsHeaderActive = "ui-icon-triangle-1-s"
+templates = "template5"
 ==
 {% component 'siteSearchInclude' %}
+<div class="background_bubble1"></div>
+<div class="background_bubble2"></div>
+<div class="background_bubble3"></div>
+<div class="background_bubble4"></div>
 
-<h1 class="display-1 aos-init aos-animate" data-aos="fade-up">BACKGROUND</h1>
-<div class="about-background">
-    {% component 'background' %}
+<!-- vision -->
+<div class="container-fluid the_project">
+    <div class="background"></div>
+    <div class="container">
+
+        <div class="row between-md around-xs middle-xs">
+            <div class="col-sm-5 col-xs-12 center-xs ">
+
+            </div>
+            <div class="col-sm-7 col-xs-12">
+                {% component 'the_project' %}
+            </div>
+        </div>
+    </div>
 </div>
-<div class="about-background-blue">
-    {% component 'backgroundblue' %}
+<!-- mission -->
+<div class="container-fluid the_project2">
+    <div class="background"></div>
+    <div class="container">
+
+        <div class="row between-md around-xs middle-xs">
+
+            <div class="col-sm-7 col-xs-12 ">
+                {% component 'the_project2' %}
+            </div>
+            <div class="col-sm-5 col-xs-12 center-xs">
+            </div>
+        </div>
+    </div>
 </div>
-<div class="about-background-3">
-    {% component 'background3' %}
-</div>
-<div class="about-background-4">
-    {% component 'background4' %}
+
+    <div class="container">
+        <div class="row top-xs">
+            <div class="col-md-12 col-xs-12 objectives yellow">
+                {% component 'objectives' %}
+            </div>
+
+        </div>
+    </div>
+
+<div class="container" id="work-packages">
+    <div class="row top-xs">
+        <div class="col-md-12 col-xs-12 work_packages blue">
+            {% component 'accordion' %}
+        </div>
+    </div>
 </div>

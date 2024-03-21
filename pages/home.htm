@@ -52,7 +52,7 @@ function onStart(){
     //main
     $this['consortium_partners'] = Partner::where('type', 1)->get();
 
-    $this['news'] = Article::news()->where('published_at', '<=', 'now()')->where('published', 'true')->orderBy('published_at', 'DESC')->take(10)->get();
+    $this['news'] = Article::news()->where('published_at', '<=', 'now()')->where('published', 'true')->orderBy('published_at', 'DESC')->take(5)->get();
 }
 ?>
 ==
@@ -65,7 +65,7 @@ function onStart(){
 <div class="container-fluid vision">
     <div class="background"></div>
     <div class="container">
-        
+
         <div class="row between-md around-xs middle-xs">
             <div class="col-sm-5 col-xs-12 center-xs ">
                 <h2>Vision</h2>
@@ -80,7 +80,7 @@ function onStart(){
 <div class="container-fluid mission">
     <div class="background"></div>
     <div class="container">
-        
+
         <div class="row between-md around-xs middle-xs">
 
             <div class="col-sm-7 col-xs-12 ">
@@ -98,7 +98,7 @@ function onStart(){
 <div class="container-fluid goals">
     <div class="background"></div>
     <div class="container">
-        
+
         <div class="row between-md around-xs middle-xs">
             <div class="col-sm-5 col-xs-12 center-xs">
                 <h2>Goals</h2>
@@ -132,7 +132,7 @@ function onStart(){
                 <div class="slide">
                     <div class="col-xs-12 col-md-4 news-item item-{{highlight.slug}}">
                         <div class="row news_column">
-                            <a href="">
+                            <a href="{{'news'|page}}/{{highlight.slug}}">
                                 <div class="news_image">
                                     <!--<img class="news-img-top" src="{{ highlight.cover|crop_image|resize(290, 293, {'mode': 'crop'}) }}" />-->
                                     <img class="news-img-top" src="{{ highlight.cover.path }}" />

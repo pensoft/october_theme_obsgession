@@ -15,8 +15,6 @@ redirect_to_detailed_page = "false"
 ==
 <?php
 use Pensoft\Calendar\Models\Entry;
-use Carbon\Carbon;
-use RainLab\User\Facades\Auth;
 
 function onStart(){
 
@@ -41,9 +39,7 @@ DB::raw("
 
 )->where('slug', $this->param('slug'))->first();
 
-
-
-\BennoThommo\Meta\Meta::set('twitter:card', 'summary');
+\BennoThommo\Meta\Meta::set('twitter:card', 'summary_large_image');
 \BennoThommo\Meta\Meta::set('twitter:title', $this['entry']['title']);
 \BennoThommo\Meta\Meta::set('twitter:description', str_limit(Html::strip($this['entry']['description']), 255));
 \BennoThommo\Meta\Meta::set('og:title', $this['entry']['title']);
@@ -51,7 +47,8 @@ DB::raw("
 \BennoThommo\Meta\Meta::set('og:type', 'article');
 \BennoThommo\Meta\Meta::set('og:url', $this->pageUrl(''));
 if($this['entry']['cover_image']){
-\BennoThommo\Meta\Meta::set('twitter:image', $this['entry']['cover_image']->getThumb(300, 300, ['mode' => 'crop']));
+\BennoThommo\Meta\Meta::set('twitter:image', $this['entry']['cover']->getThumb(600, null, ['mode' => 'auto']));
+
 
 \BennoThommo\Meta\Meta::set('og:image', $this['entry']['cover_image']->getThumb(600, 314, ['mode' => 'crop']));
 \BennoThommo\Meta\Meta::set('og:image:width', 600);
@@ -60,23 +57,17 @@ if($this['entry']['cover_image']){
 
 }
 $this['page_url'] = $this->pageUrl('');
-
-$user = Auth::getUser();
-if($user){
-$this['entries'] = Entry::where('start', '>', Carbon::now())->orderBy('start', 'asc')->paginate(20);
-}else{
-$this['entries'] = Entry::where('start', '>', Carbon::now())->where('is_internal', false)->orderBy('start', 'asc')->paginate(20);
-}
-
+$this['entries'] = Entry::orderBy('start', 'desc')->paginate(20);
 
 $this['slug'] = $this->param('slug');
 }
 ?>
 ==
+<h1 class="underline">Events</h1>
 {% if not slug %}
 <div class="container">
     <div class="tabs">
-        <a class="" href="#listView">List view</a>
+        <a class="" href="#listView">List view</a> <span class="divider">|</span>
         <a class="" href="#calendarView">Calendar view</a>
 
     </div>
@@ -92,15 +83,15 @@ $this['slug'] = $this->param('slug');
 
                 <div class="row entry_item middle-xs">
                     <div class="col-md-2 col-xs-12 date_container">
-                        <span class="date_day">{{entry.start|date("d")}}</span>
+                        <span class="date_day">{% if entry.start|date("j") != entry.end|date("j") %} {{entry.start|date("j")}}-{{entry.end|date("j")}}{% else %}{{entry.start|date("j")}}{% endif %}</span>
                         <span class="date_month">{{entry.start|date("M")}}</span>
                         <span class="date_year">{{entry.start|date("Y")}}</span>
                     </div>
-                    <div class="col-md-7 col-xs-12 content_text">
+                    <div class="col-md-8 col-xs-12">
                         <span class="date_week mb-1">{{entry.start|date("l")}}</span>
                         {{entry.title|raw}}
                     </div>
-                    <div class="col-md-3 col-xs-12 end-md center-xs">
+                    <div class="col-md-2 col-xs-12 end-md center-xs">
                         <a href="{{'events'|page}}/{{entry.slug}}" class="read_more">Read more</a>
                     </div>
                 </div>
@@ -138,7 +129,9 @@ $this['slug'] = $this->param('slug');
             <div class="news-title">
                 <h1 class="single-new-title">{{entry.title}}</h1>
             </div>
-            <div class="text-published">{{entry.start|date("d M Y")}} - {{entry.end|date("d M Y")}}</div>
+
+
+            <div class="text-published">{% if entry.start|date("j") == entry.end|date("j") %} {{entry.start|date("j M Y")}} {% elseif entry.start|date("M") == entry.end|date("M") %} {{entry.start|date("j")}}-{{entry.end|date("j M Y")}} {% else %} {{entry.start|date("d M Y")}} - {{entry.end|date("d M Y")}}  {% endif %}</div>
             <div class="text-place">{{entry.place}}</div>
 
         </div>
@@ -154,20 +147,14 @@ $this['slug'] = $this->param('slug');
             <br><br><a href="{{entry.url}}" class="read_more" target="_blank">Go to event website</a>
             {% endif %}
 
-
-
             <div class="row share_container middle-xs">
-                <div class="col-lg-1 col-xs-2 start-xs">Share</div>
-                <div class="col-xs-10">
-                    <a href="http://twitter.com/share?text={{entry.title}}&url={{page_url}}" target="_blank" class="btn p-primary pr p-twitter medium"></a>
-
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="btn pr p-primary p-facebook medium"></a>
-
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="btn pr p-primary p-linkedin medium"></a>
-
+                <div class="col-cx-12 center-xs share_label">Share</div>
+                <div class="col-cx-12 center-xs">
+                    <a href="http://twitter.com/share?text={{entry.title}}&url={{page_url}}" target="_blank" class="pr p-twitter big hexagon"></a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="pr p-facebook big  hexagon"></a>
+                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="pr p-linkedin big hexagon"></a>
                 </div>
             </div>
-
 
         </div>
     </div>
