@@ -15,6 +15,10 @@ detailsPage = "-"
 detailsUrlParameter = "id"
 pageNumber = "{{ :page }}"
 
+
+[siteSearchInclude]
+
+
 [jumbotron]
 jumbotron = "under-construction"
 title = 1
@@ -30,6 +34,7 @@ function onStart(){
 }
 ?>
 ==
+{% component 'siteSearchInclude' %}
 {% set records = mediaPressreleasesList %}
 
 {% if records.count %}

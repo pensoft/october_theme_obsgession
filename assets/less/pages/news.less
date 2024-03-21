@@ -289,9 +289,9 @@ nav:not(.navbar){
             justify-content: space-around;
             padding: 0;
             margin: 0;
-            .breakpoint-large-down({
-                display: unset;
-            });
+            //.breakpoint-large-down({
+            //    display: unset;
+            //});
 
             .card-title{
                 color: @heading-text-color!important;
@@ -310,6 +310,10 @@ nav:not(.navbar){
 
             .news-container{
                 padding: 36px 20px 36px 20px;
+                .breakpoint-large-down({
+                    padding: 20px;
+                    max-width: 90%;
+                });
             }
         }
     }
@@ -336,6 +340,8 @@ nav:not(.navbar){
             });
             .breakpoint-large-down({
                 border-radius: 32px;
+                margin: 20px auto;
+                width: 100%!important;
             });
         }
 
@@ -440,9 +446,9 @@ nav:not(.navbar){
 #slick_news {
     display: none;
 
-    .breakpoint-large-down({
-        display: block;
-    });
+    //.breakpoint-large-down({
+    //    display: block;
+    //});
 
     &.slick-initialized {
         display: block;
@@ -474,7 +480,6 @@ nav:not(.navbar){
         transition: all 0.5s ease-in-out;
         &.slick-active{
             margin: 0px 40px;
-            //width: 579px!important;
             width: 579px!important;
             max-width: 100%;
             height: 293px!important;
@@ -493,6 +498,11 @@ nav:not(.navbar){
                 }
 
             }
+
+            .breakpoint-large-down({
+                max-width: 90vw;
+                height: auto!important;
+            });
         }
         &:not(.slick-active){
             display: none;
@@ -550,9 +560,9 @@ nav:not(.navbar){
             }
 
         }
-        .breakpoint-large-down({
-            display: none!important;
-        });
+        //.breakpoint-large-down({
+        //    display: none!important;
+        //});
     }
 }
 

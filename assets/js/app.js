@@ -60,26 +60,6 @@ $(document).ready(function() {
                 $("#menuToggle input").prop("checked", false);
             }
         });
-
-        // if (width >= 1024) {
-        //     $('.work_packages_container .col-md').on("click", function () {
-        //         $('.work_packages_container .wp_content').hide();
-        //         if(!$(this).next('.wp_content').is(':visible')){
-        //             $(this).next('.wp_content').show();
-        //         }
-        //     });
-        // }
-
-        // $('.work_packages_container .col-md').on("mouseover", function () {
-        //     $('.work_packages_container .wp_content').hide();
-        //     $(this).next('.wp_content').show();
-        // });
-        // $('.work_packages_container .col-md').on("mouseout", function () {
-        //     $('.work_packages_container .wp_content').hide();
-        // });
-
-
-
     }
 
     if (width < 990) { // mobile
@@ -102,12 +82,6 @@ $(document).ready(function() {
                 });
             }
         });
-        // $('.work_packages_container .col-md').on("click", function () {
-        //     $('.work_packages_container .wp_content').hide();
-        //     if(!$(this).next('.wp_content').is(':visible')){
-        //         $(this).next('.wp_content').show();
-        //     }
-        // });
 
     }
 
@@ -128,8 +102,6 @@ $(document).ready(function() {
     });
 
     $("nav").removeClass("no-transition");
-
-
 
 	onHashChange();
 	$(window).on("hashchange", function() {
@@ -207,11 +179,6 @@ $(document).ready(function() {
         return (innerWidth - $('.container').width())/2 + more;
     });
 
-    // if (width >= 1024) {
-    //     $('.partners_list .key_1, .partners_list .key_3, .partners_list .key_5, .partners_list .key_7, .partners_list .key_9, .partners_list .key_11, .partners_list .key_13, .partners_list .key_15, .partners_list .key_17, .partners_list .key_19').wrapAll('<div class="col-md-6 col-xs-12" />');
-    //     $('.partners_list .key_0, .partners_list .key_2, .partners_list .key_4, .partners_list .key_6, .partners_list .key_8, .partners_list .key_10, .partners_list .key_12, .partners_list .key_14, .partners_list .key_16, .partners_list .key_18').wrapAll('<div class="col-md-6 col-xs-12" />');
-    // }
-
 
     $( window ).on( "load", function() {
         $(".projects_services .accordion-border").each(function(k, v) {
@@ -228,6 +195,10 @@ $(document).ready(function() {
         $('.projects_services .col-md-6').click(function (){
             $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active ui-state-focus");
         });
+
+        $('.projects_services .accordion-border').click(function (){
+            $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active ui-state-focus");
+        });
     } );
 
 
@@ -242,95 +213,6 @@ $(document).ready(function() {
         '</div>').insertAfter($('.card.internal:nth-child(5)'));
 
     $('<div class="mark"></div>').insertAfter($('.group-holder input'));
-
-    // $('.tabs').each(function(){
-    //     // For each set of tabs, we want to keep track of
-    //     // which tab is active and its associated content
-    //     var $active, $content, $links = $(this).find('a');
-    //     var speed = 500;
-    //     var activeTab = $(location.hash);
-    //     var screenSize = getScreenSize();
-    //     // If the location.hash matches one of the links, use that as the active tab.
-    //     // If no match is found, use the first link as the initial active tab.
-    //     $active = $($links.filter("[href=\'"+location.hash+"\']")[0] || $links[0]);
-    //
-    //     if($(this).parent().parent().hasClass('events')){
-    //         $active.addClass('active');
-    //     }
-    //
-    //     $content = $($active[0].hash);
-    //
-    //     // Hide the remaining content
-    //     $links.not($active).each(function () {
-    //         $(this.hash).hide();
-    //     });
-    //
-    //     if(activeTab.length){
-    //         $content.slideDown(speed);
-    //         //scroll to element
-    //         $('html, body').animate({
-    //             scrollTop:  activeTab.offset().top - $('header').height()  - 300
-    //         }, speed);
-    //     }
-    //
-    //     // Bind the click event handler
-    //     $(this).find("a").click(function (e) {
-    //         if($(this).hasClass('active')) {
-    //             $content.slideDown({
-    //                 scrollTop: $content.offset().top - $('header').height()
-    //             }, speed);
-    //
-    //             if (screenSize.width < 800) {
-    //                 // scroll to element
-    //                 $('html, body').animate({
-    //                     scrollTop: $content.offset().top - $('header').height() - 300  // mobile
-    //                 }, speed);
-    //             }
-    //             // else{
-    //             //     //scroll to element icons top
-    //             //     $('html, body').animate({
-    //             //         scrollTop:  $content.offset().top - $('header').height()
-    //             //     }, speed);
-    //             // }
-    //             e.preventDefault();
-    //             return false;
-    //         }
-    //         // Make the old tab inactive.
-    //         $active.removeClass('active');
-    //         // $content.slideUp({
-    //         // 	scrollTop: $content.offset().top - $('header').height() - $('.left_sidebar').height()
-    //         // }, speed);
-    //         $content.hide();
-    //
-    //         // Update the variables with the new link and content
-    //         $active = $(this);
-    //         $content = $(this.hash);
-    //
-    //         location.hash = $active[0].hash;
-    //
-    //         // Make the tab active.
-    //         $active.addClass('active');
-    //         $content.slideDown({
-    //             scrollTop: $content.offset().top - $('header').height()
-    //         }, speed);
-    //         if (screenSize.width < 800) {
-    //             // scroll to element
-    //             $('html, body').animate({
-    //                 scrollTop: $content.offset().top - $('header').height() - 300  // mobile
-    //             }, speed);
-    //         }
-    //         // else{
-    //         //     //scroll to element icons top
-    //         //     $('html, body').animate({
-    //         //         scrollTop:  $content.offset().top - $('header').height()
-    //         //     }, speed);
-    //         // }
-    //
-    //         // Prevent the anchor\'s default click action
-    //         e.preventDefault();
-    //     });
-    // });
-
 
     // bootstrap 3 breakpoints
     const breakpoint = {
@@ -352,7 +234,6 @@ $(document).ready(function() {
             slidesToShow: 3,
             focusOnSelect: true,
             dots: true,
-            // infinite: true,
             responsive: [
                 {
                     breakpoint: 768,
@@ -360,8 +241,7 @@ $(document).ready(function() {
                         arrows: false,
                         centerMode: true,
                         centerPadding: '10px',
-                        slidesToShow: 2,
-                        // slidesToScroll: 1
+                        slidesToShow: 1,
                     }
                 },
                 {
@@ -371,42 +251,42 @@ $(document).ready(function() {
                         centerMode: true,
                         centerPadding: '10px',
                         slidesToShow: 1,
-                        // slidesToScroll: 1
                     }
                 }
             ]
         });
     }
 
-    if (width > 990) { // desktop
-        if ($('#slick_news').length) {
-            $('#slick_news').slick({
-                centerMode: true,
-                variableWidth: true,
-                infinite: true,
-                slidesToShow: 3,//TODO
-                responsive: [
-                    {
-                        breakpoint: 768,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 3
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            arrows: false,
-                            centerMode: true,
-                            centerPadding: '40px',
-                            slidesToShow: 1
-                        }
+    if ($('#slick_news').length) {
+        $('#slick_news').slick({
+            centerMode: true,
+            variableWidth: true,
+            infinite: true,
+            slidesToShow: 3,//TODO
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1,
+                        dots: true,
                     }
-                ]
-            });
-        }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        arrows: false,
+                        centerMode: true,
+                        dots: true,
+                        centerPadding: '40px',
+                        slidesToShow: 1
+                    }
+                }
+            ]
+        });
+
     }
 
     $('body').on('click', '.work_packages .accordion-toggle, .messages .accordion-toggle', function () {
@@ -480,8 +360,6 @@ $(document).ready(function() {
                 });
             }
         }
-
-
     });
 
 
@@ -504,7 +382,6 @@ $(document).ready(function() {
                 totalHeight += $(this).outerHeight();
             });
 
-
             $up.addClass('changed');
 
             $el.css({
@@ -522,13 +399,10 @@ $(document).ready(function() {
             $el.html("<a href=\"javascript:void(0);\">Read less</a>");
             // $up.slideDown();
         } else {
-
             $up.removeClass('changed');
-
             $el.css({
                 top: 100
             });
-
             $up.css({
                 // Set height to prevent instant jumpdown when max height is removed
                 "height": $up.height(),
@@ -629,14 +503,6 @@ function appendSearchAndSocialMedia(){
 	menu.find('>ul').append(liSearch).append(liSocial);
 }
 
-// function redirectAndRefresh(url){
-// 	$(".tabs a").each(function() {
-// 		this.href = window.location.hash;
-// 	});
-// 	window.open(url, '_blank');
-// 	location.reload();
-// }
-
 function getScreenSize() {
     var myHeight = 0;
     var myWidth = 0;
@@ -670,16 +536,12 @@ function showSearchForm(){
     $('#layout-header').toggleClass('full-width');
     $('#search').toggle();
     $('.navbar a.p-search').css('visibility', 'hidden');
-    // $('#menu li').hide();
-    // $('nav a:not(.navbar-brand)').hide();
 }
 
 function hideSearchForm(){
     $('#layout-header').toggleClass('full-width');
     $('#search').hide();
     $('.navbar a.p-search').css('visibility', 'visible');
-    // $('#menu li').show();
-    // $('nav a').show();
 }
 
 function requestFormLibrary() {
@@ -710,8 +572,6 @@ function isScrolledIntoView(elem) {
 
 }
 
-
-
 function scrollDown(){
 	var element = $('#layout-content');
 	$("html, body").animate({ scrollTop: element.offset().top - 190 }, 500);
@@ -733,301 +593,6 @@ function onMapCustomPartners(code) {
             tooltip.classList.remove("active");
 		});
 }
-
-
-function handleCustomSVGMapMouseMove(event) {
-    var countryCode = $(event.target).attr('country_code');
-    var title = $(event.target).attr('title');
-    var tooltip = document.getElementById("tooltip");
-    if (!countryCode) {
-        countryCode = $(event.target).parent().attr('country_code');
-        title = $(event.target).parent().attr('title');
-    }
-
-    switch (countryCode) {
-        case "AF":
-        case "AX":
-        case "AL":
-        case "DZ":
-        case "AS":
-        case "AD":
-        case "AO":
-        case "AI":
-        case "AQ":
-        case "AG":
-        case "AR":
-        case "AM":
-        case "AW":
-        case "AT":
-        case "AZ":
-        case "BS":
-        case "BH":
-        case "BD":
-        case "BB":
-        case "BY":
-        case "BE":
-        case "BZ":
-        case "BJ":
-        case "BM":
-        case "BT":
-        case "BO":
-        case "BQ":
-        case "BA":
-        case "BW":
-        case "BV":
-        case "BR":
-        case "IO":
-        case "BN":
-        case "BG":
-        case "BF":
-        case "BI":
-        case "KH":
-        case "CM":
-        case "CV":
-        case "KY":
-        case "CF":
-        case "TD":
-        case "CL":
-        case "CN":
-        case "CX":
-        case "CC":
-        case "CO":
-        case "KM":
-        case "CG":
-        case "CD":
-        case "CK":
-        case "CR":
-        case "CI":
-        case "HR":
-        case "CU":
-        case "CW":
-        case "CY":
-        case "CZ":
-        case "DK":
-        case "DJ":
-        case "DM":
-        case "DO":
-        case "EC":
-        case "EG":
-        case "SV":
-        case "GQ":
-        case "ER":
-        case "EE":
-        case "ET":
-        case "FK":
-        case "FO":
-        case "FI":
-        case "FJ":
-        case "GF":
-        case "PF":
-        case "TF":
-        case "GA":
-        case "GM":
-        case "GE":
-        case "GH":
-        case "GI":
-        case "GR":
-        case "GL":
-        case "GD":
-        case "GP":
-        case "GU":
-        case "GT":
-        case "GG":
-        case "GN":
-        case "GW":
-        case "GY":
-        case "HT":
-        case "HM":
-        case "VA":
-        case "HN":
-        case "HK":
-        case "IS":
-        case "ID":
-        case "IR":
-        case "IQ":
-        case "IM":
-        case "IL":
-        case "IT":
-        case "JM":
-        case "JP":
-        case "JE":
-        case "JO":
-        case "KZ":
-        case "KE":
-        case "KI":
-        case "KP":
-        case "KR":
-        case "KW":
-        case "KG":
-        case "LA":
-        case "LV":
-        case "LB":
-        case "LS":
-        case "LR":
-        case "LY":
-        case "LI":
-        case "LT":
-        case "LU":
-        case "MO":
-        case "MK":
-        case "MG":
-        case "MW":
-        case "MY":
-        case "MV":
-        case "ML":
-        case "MT":
-        case "MH":
-        case "MQ":
-        case "MR":
-        case "MU":
-        case "YT":
-        case "MX":
-        case "FM":
-        case "MD":
-        case "MC":
-        case "MN":
-        case "ME":
-        case "MS":
-        case "MA":
-        case "MZ":
-        case "MM":
-        case "NA":
-        case "NR":
-        case "NP":
-        case "NC":
-        case "FR":
-        case "IN":
-        case "NL":
-        case "HU":
-        case "IE":
-        case "CA":
-        case "NZ":
-        case "DE":
-        case "NI":
-        case "NE":
-        case "NG":
-        case "NU":
-        case "NF":
-        case "MP":
-        case "NO":
-        case "OM":
-        case "PK":
-        case "PW":
-        case "PS":
-        case "PA":
-        case "PG":
-        case "PY":
-        case "PE":
-        case "PH":
-        case "PN":
-        case "PT":
-        case "PR":
-        case "QA":
-        case "RE":
-        case "RU":
-        case "RW":
-        case "BL":
-        case "SH":
-        case "KN":
-        case "LC":
-        case "MF":
-        case "PM":
-        case "VC":
-        case "WS":
-        case "SM":
-        case "ST":
-        case "SA":
-        case "SN":
-        case "RS":
-        case "SC":
-        case "SL":
-        case "SG":
-        case "SX":
-        case "SK":
-        case "SI":
-        case "SB":
-        case "SO":
-        case "ZA":
-        case "GS":
-        case "LK":
-        case "SD":
-        case "SR":
-        case "SJ":
-        case "SZ":
-        case "SE":
-        case "SY":
-        case "TW":
-        case "TJ":
-        case "TZ":
-        case "TH":
-        case "TL":
-        case "TG":
-        case "TK":
-        case "TO":
-        case "TT":
-        case "TN":
-        case "TR":
-        case "TM":
-        case "TC":
-        case "TV":
-        case "UG":
-        case "UA":
-        case "AE":
-        case "UM":
-        case "UY":
-        case "UZ":
-        case "VU":
-        case "VE":
-        case "VN":
-        case "VG":
-        case "VI":
-        case "WF":
-        case "EH":
-        case "YE":
-        case "ZM":
-        case "ZW":
-        case "US":
-        case "GB":
-        case "ES":
-        case "AU":
-        case "RO":
-        case "CH":
-        case "PL":
-            break;
-        default:
-            return tooltip.classList.remove("active");
-    }
-
-    var x = event.clientX;
-    var y = event.clientY;
-
-    tooltip.style.left = (x + 20) + "px";
-    tooltip.style.top = (y - 20) + "px";
-
-    tooltip.innerHTML = title;
-    tooltip.classList.add("active");
-
-}
-
-
-function onCustomPartners(code) {
-    $('.partner-item').removeClass('active_partner');
-    $.request('onPartners', {
-        update: { 'components/partners_list': '#mycomponentpartners',
-        },
-        data: {
-            code: code
-        },
-    }).then(response => {
-        $('html, body').animate({
-            scrollTop: $("#mycomponentpartners").offset().top - 200
-        }, 1000);
-        var tooltip = document.getElementById("tooltip");
-        tooltip.classList.remove("active");
-    });
-}
-
-
 
 
 function hideMe(elem){
@@ -1131,45 +696,11 @@ function init() {
         }
 		appendSearchAndSocialMedia()
 		requestFormLibrary()
-		// requestFormPartners()
-        // keepFooter(documentHasScroll());
 
     });
     // appendProfile()
     // appendSignIn()
     // appendSignOut()
-}
-
-
-function handlePilotsSVGMapMouseMove(event) {
-	var title = $(event.target).attr('title');
-	var tooltip = document.getElementById("tooltip");
-	if (!title) {
-		title = $(event.target).parent().attr('title');
-	}
-
-	switch (title) {
-		case 'Salisbury Plain':
-		case 'French Mediterranean natural reserves':
-		case 'Friedeburg':
-		case 'LTER Petrohan':
-		case 'Mols Bjerge National Park':
-		case 'Oostvaardersplassen Nature Reserve':
-		case 'Island of Comino and surrounding islets':
-			break;
-		default:
-			return tooltip.classList.remove("active");
-	}
-
-	var x = event.clientX;
-	var y = event.clientY;
-
-	tooltip.style.left = (x + 20) + "px";
-	tooltip.style.top = (y - 20) + "px";
-
-	tooltip.innerHTML = $(event.target).attr('title');
-	tooltip.classList.add("active");
-
 }
 
 

@@ -997,7 +997,6 @@ now override the 3.3 new styles for modern browsers & apply opacity
     display: flex;
     justify-content: center;
 
-
     a{
         max-width: 25%;
         .breakpoint-small-down({
@@ -1007,6 +1006,7 @@ now override the 3.3 new styles for modern browsers & apply opacity
     img{
         height: 140px;
         width: auto;
+        max-width: 100%;
         object-fit: contain;
 
     }
@@ -1065,6 +1065,9 @@ now override the 3.3 new styles for modern browsers & apply opacity
         justify-content: center;
         position: relative;
         width: auto!important;
+        .breakpoint-large-down({
+            width: 100%!important;
+        });
 
         &:focus {
             outline: none;
@@ -1077,6 +1080,9 @@ now override the 3.3 new styles for modern browsers & apply opacity
             height: 50%;
             right: 0;
             border-right: 1px solid #173A3D!important;
+            .breakpoint-large-down({
+                display: none;
+            });
         }
     }
 
@@ -1151,6 +1157,61 @@ now override the 3.3 new styles for modern browsers & apply opacity
         list-style: none;
         z-index: 1;
         margin: 0;
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        transform: translate(-50%,calc(100% + 30px));
+
+        > LI {
+            float: left;
+            display: block;
+            margin-right: 0px;
+            width: 15px;
+
+            BUTTON {
+                display: block;
+                width: 15px;
+                height: 15px;
+                text-indent: -999px;
+                cursor: pointer;
+                background: @secondary-color;
+                padding: 0;
+                margin: 0;
+                overflow: hidden;
+                border-radius: 50%;
+                border: 1px solid @secondary-color;
+
+                &:focus {
+                    outline: none;
+                }
+            }
+            &.slick-active,
+            &:hover {
+                BUTTON {
+                    width: 15px!important;
+                    height: 15px!important;
+                    background: @link-color;
+                    border: 1px solid @link-color;
+                }
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+#slick_news{
+    /* slick dots */
+    .slick-dots {
+        position: relative;
+        bottom: 0;
+        left: 50%;
+        padding: 0;
+        list-style: none;
+        z-index: 1;
+        margin: 20px auto 50px auto;
         display: flex;
         text-align: center;
         justify-content: center;
