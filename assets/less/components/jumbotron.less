@@ -410,13 +410,16 @@
             text-align: left;
             color: white;
             position: relative;
-            transition: all 1s ease;
+            transition: all 0.9s ease;
             transform: translateY(0);
             .cs_title{
                 font-size: 22px;
                 font-weight: bold;
-                transition: all 1s ease;
+                transition: all 0.9s ease;
                 transform: translateY(100%);
+                min-height: 83px;
+                display: flex;
+                align-items: end;
             }
 
             .cs_description {
@@ -430,7 +433,7 @@
                 width: 85%;
                 padding: 0 23px;
                 height: 0;
-                transition: all 1s ease;
+                transition: all 0.9s ease;
             }
 
             &:hover{
@@ -440,6 +443,9 @@
                     opacity: 1;
                     transform: translateY(0);
                     height: 100%;
+                    min-height: 83px;
+                    display: unset;
+                    align-items: unset;
                 }
                 .cs_description {
                     opacity: 1;

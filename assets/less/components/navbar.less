@@ -89,21 +89,21 @@
         background-color: @navbar-bkg-color;
     }
 
-    &.scrolled {
-        background-color: @navbar-bkg-color !important;
-
-        .navbar-brand {
-            height: 51px;
-            .breakpoint-small-down({
-                height: 65px;
-            });
-        }
-    }
+    //&.scrolled {
+    //    background-color: @navbar-bkg-color !important;
+    //    height: 86px;
+    //    .navbar-brand {
+    //        height: 81px!important;
+    //        //.breakpoint-small-down({
+    //        //    height: 86px;
+    //        //});
+    //    }
+    //}
 
     .navbar-brand {
         display: flex;
         flex-basis: 392px;
-        height: 95px;
+        height: 85px;
         //background-size: 500px;
         background-repeat: no-repeat;
         transition: all 0.3s;
@@ -133,8 +133,8 @@
             width: 100%;
             max-width: fit-content;
             flex-grow: 1;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding-left: 0.8rem;
+            padding-right: 0.8rem;
             padding-top: 0;
             padding-bottom: 0;
             justify-content: space-around;
@@ -158,8 +158,8 @@
                 text-align: center;
 
                 &>a {
-                    padding-left: 0.2rem;
-                    padding-right: 0.2rem;
+                    padding-left: 0.4rem;
+                    padding-right: 0.4rem;
                     padding-top: 1rem;
                     padding-bottom: 1rem;
                     margin-left: 0.5rem;
@@ -347,6 +347,7 @@
             background: none!important;
             &.scrolled {
                 background: @navbar-scrolled-color!important;
+                height: 86px;
             }
         }
 
@@ -424,12 +425,12 @@
 }
 
 
-.scrolled{
-    #search{
-        top: 61px;
-        background: @dark-color;
-    }
-}
+//.scrolled{
+//    #search{
+//        top: 85px;
+//        background: @dark-color;
+//    }
+//}
 
 
 
@@ -455,11 +456,11 @@
 
 }
 
-.scrolled{
-    .close-search{
-        top: 17px;
-    }
-}
+//.scrolled{
+//    .close-search{
+//        top: 27px;
+//    }
+//}
 
 nav .pr.p-search.middle.search-btn{
     .breakpoint-huge-down({
