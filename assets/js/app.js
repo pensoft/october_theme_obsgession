@@ -262,7 +262,7 @@ $(document).ready(function() {
             centerMode: true,
             variableWidth: true,
             infinite: true,
-            slidesToShow: 3,//TODO
+            slidesToShow: 1,//TODO
             responsive: [
                 {
                     breakpoint: 768,
