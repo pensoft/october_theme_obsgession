@@ -15,6 +15,10 @@
         align-items: center;
         position: relative;
         font-size: 22px;
+        .breakpoint-large-down({
+            text-align: justify;
+            font-size: 1em!important;
+        });
     }
     h2{
         font-size: 40px;
@@ -24,6 +28,7 @@
             color: @dark-color;
         });
     }
+
     .background{
         .breakpoint-small-down({
             display: none;
@@ -103,8 +108,10 @@
         align-items: start;
         padding: 0;
         color: #656565;
+        
         h1.display-1{
-            margin-top: 0!important;
+            margin-top: 0px!important;
+            margin-bottom: 10px!important;
         }
     }
 }
@@ -131,7 +138,7 @@
     .container{
         display: flex;
         flex-direction: column;
-        justify-content: start;
+        justify-content: center;
         align-items: center;
         padding: 0;
         color: #656565;
@@ -410,7 +417,7 @@
             text-align: left;
             color: white;
             position: relative;
-            transition: all 0.9s ease;
+            // transition: all 0.9s ease;
             transform: translateY(0);
             .cs_title{
                 font-size: 22px;
