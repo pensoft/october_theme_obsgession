@@ -184,6 +184,7 @@ $(document).ready(function() {
         $(".projects_services .accordion-border").each(function(k, v) {
             $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active");
             $(this).removeClass("ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active");
+            $(this).removeAttr('style');
         });
 
         $('.projects_services .col-md-6').each(function(k, v){
@@ -198,6 +199,8 @@ $(document).ready(function() {
 
         $('.projects_services .accordion-border').click(function (){
             $(this).removeClass("ui-accordion-header ui-corner-top ui-state-default ui-accordion-icons ui-state-hover ui-accordion-header-active ui-state-active ui-state-focus");
+            $(this).removeClass("ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active");
+            $(this).removeAttr('style');
         });
     } );
 
@@ -497,8 +500,8 @@ function appendSignOut() {
 function appendSearchAndSocialMedia(){
 	var liSearch = '<li class="nav-item search_field"><a href=\"javascript: void(0);\" onclick=\"showSearchForm();\"></a></li>';
 	var liSocial = '<li class="nav-item social">' +
-        '<a href=\"https://twitter.com/obsgession\" target=\"_blank\" class=\"pr p-twitter big\" target=\"_blank\"></a>' +
-        '<a href=\"https://www.linkedin.com/company/OBSGESSION/\" target=\"_blank\" class=\"pr p-linkedin big\" target=\"_blank\"></a></li>';
+        '<a href=\"https://twitter.com/obsgession_\" target=\"_blank\" class=\"pr p-twitter big\" target=\"_blank\"></a>' +
+        '<a href=\"https://www.linkedin.com/company/obsgession-horizoneurope/\" target=\"_blank\" class=\"pr p-linkedin big\" target=\"_blank\"></a></li>';
 	var menu = $('#menuToggle');
 	menu.find('>ul').append(liSearch).append(liSocial);
 }

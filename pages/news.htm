@@ -108,7 +108,7 @@ $this['related'] = $related;
             {% endif %}
         </div>
         <div class="col-xs-12">
-            <div class="text-published">{{article.date|date("j M Y")}}</div>
+            <div class="text-published">{{article.published_at|date("j M Y")}}</div>
         </div>
         <div class="col-xs-12 news-title">
             <h1 class="single-new-title">{{article.title}}</h1>
@@ -136,7 +136,7 @@ $this['related'] = $related;
         {% spaceless %}
         <div class="col-md-4 col-xs-12 news-item center-xs center-md">
             <div class="row news_column">
-                <div class="text-published">{{ record.date|date("d M Y")}}</div>
+                <div class="text-published">{{ record.published_at|date("d M Y")}}</div>
                 <a href="{{'news'|page}}/{{record.slug}}">
                     {% if record.cover %}
                     <div class="news-image col-xs-12 center-xs">

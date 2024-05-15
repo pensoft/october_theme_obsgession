@@ -11,8 +11,6 @@ jumbotron = "intro"
 background = "transperant"
 templates = "template1"
 description_limit = 0
-
-
 ==
 {% if user %}
 <nav class="fixed navbar-loggedin-user ">
@@ -83,7 +81,7 @@ description_limit = 0
                 <div class="intro-text">
                     {% component 'jumbotron' %}
                 </div>
-                <div class="intro_btn"><a href="" class="read_more">Read more</a> </div>
+                <div class="intro_btn"><a href="{{'about'|page}}" class="read_more">Read more</a> </div>
             </div>
         </div>
         {% endif %}
