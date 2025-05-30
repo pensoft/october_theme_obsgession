@@ -100,6 +100,12 @@ theme = "dark-bottom"
                             {% if this.theme.researchgate %}
                             <a href="{{this.theme.researchgate_url}}" target="_blank" class="pr p-researchgate big"></a>
                             {% endif %}
+                            {% if this.theme.bluesky_url %}
+                            <a href="{{this.theme.bluesky_url}}" target="_blank" class="pr p-bluesky big"></a>
+                            {% endif %}
+                            {% if this.theme.threads_url %}
+                            <a href="{{this.theme.threads_url}}" target="_blank" class="pr p-threads big"></a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-md-9 col-xs-12 start-md center-xs">
