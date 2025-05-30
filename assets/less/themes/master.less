@@ -654,7 +654,7 @@ min-height: 100%;
         height: 10px;
         a{
             font-size: 1.8em!important;
-            margin-right: 18px;
+            margin-right: 6px;
             &.p-twitter{
                 font-size: 1.3em !important;
                 margin-top: 5px;
@@ -1040,9 +1040,13 @@ now override the 3.3 new styles for modern browsers & apply opacity
 }
 .consortium_partners{
     .partner_logo{
-        display: inline-block;
+        display: inline-flex;
         padding: 0 40px;
         margin: 20px 0;
+        align-items: center;
+        justify-content: center;
+        height: 90px;
+
         .breakpoint-large-down({
             padding: 0 5px;
         });
@@ -1210,6 +1214,10 @@ now override the 3.3 new styles for modern browsers & apply opacity
 
                 &:focus {
                     outline: none;
+                    color: transparent;
+                }
+                &::before{
+                    color: transparent;
                 }
             }
             &.slick-active,

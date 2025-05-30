@@ -25,7 +25,15 @@ jumbotron = "footer-funds-logos"
 background = "transperant"
 templates = "template3"
 description_limit = 0
+
+[cookieConsent]
+message = "This website uses cookies to ensure you get the best experience on our website."
+dismiss = "Got it!"
+learnMore = "Opt-out here"
+link = "/privacy-policy#cookies"
+theme = "dark-bottom"
 ==
+{% component 'cookieConsent' %}
 <div class="container-fluid border-box dark-background">
     <div class="container">
         <div class="row top-xs between-xs footer-menu-container">
@@ -84,7 +92,7 @@ description_limit = 0
                             <a href="{{this.theme.linkedin_url}}" target="_blank" class="pr p-linkedin big"></a>
                             {% endif %}
                             {% if this.theme.youtube %}
-                            <a href="{{this.theme.youtube_url}}" target="_blank" class="pr p-youtube big"></a>
+                            <a href="{{this.theme.youtube_url}}" target="_blank" class="pr p-youtube big" style="margin-top:7px;"></a>
                             {% endif %}
                             {% if this.theme.instagram %}
                             <a href="{{this.theme.instagram_url}}" target="_blank" class="pr p-instagram big"></a>
