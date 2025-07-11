@@ -234,7 +234,7 @@ $(document).ready(function() {
         $('#slick').slick({
             centerMode: true,
             centerPadding: '50px',
-            slidesToShow: 3,
+            slidesToShow: 3,            
             focusOnSelect: true,
             dots: true,
             responsive: [
@@ -266,6 +266,8 @@ $(document).ready(function() {
             variableWidth: true,
             infinite: true,
             slidesToShow: 3,
+            slidesToScroll: 1,
+            centerPadding: '50px',
             responsive: [
                 {
                     breakpoint: 768,
