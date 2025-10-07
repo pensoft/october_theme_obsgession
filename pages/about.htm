@@ -42,55 +42,59 @@ iconsHeaderActive = "ui-icon-triangle-1-s"
 templates = "template5"
 ==
 {% component 'siteSearchInclude' %}
-<div class="background_bubble1"></div>
-<div class="background_bubble2"></div>
-<div class="background_bubble3"></div>
-<div class="background_bubble4"></div>
+<div class="background_bubble1" aria-hidden="true"></div>
+<div class="background_bubble2" aria-hidden="true"></div>
+<div class="background_bubble3" aria-hidden="true"></div>
+<div class="background_bubble4" aria-hidden="true"></div>
 
-<!-- vision -->
-<div class="container-fluid the_project">
-    <div class="background"></div>
-    <div class="container">
+<main id="main-content" role="main">
 
-        <div class="row between-md around-xs middle-xs">
-            <div class="col-sm-5 col-xs-12 center-xs ">
+    <!-- the project section 1 -->
+    <section class="container-fluid the_project" aria-labelledby="project-heading-1">
+        <div class="background" aria-hidden="true"></div>
+        <div class="container">
 
-            </div>
-            <div class="col-sm-7 col-xs-12">
-                {% component 'the_project' %}
-            </div>
-        </div>
-    </div>
-</div>
-<!-- mission -->
-<div class="container-fluid the_project2">
-    <div class="background"></div>
-    <div class="container">
+            <div class="row between-md around-xs middle-xs">
+                <div class="col-sm-5 col-xs-12 center-xs ">
 
-        <div class="row between-md around-xs middle-xs">
-
-            <div class="col-sm-7 col-xs-12 ">
-                {% component 'the_project2' %}
-            </div>
-            <div class="col-sm-5 col-xs-12 center-xs">
+                </div>
+                <div class="col-sm-7 col-xs-12">
+                    {% component 'the_project' %}
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+    <!-- the project section 2 -->
+    <section class="container-fluid the_project2" aria-labelledby="project-heading-2">
+        <div class="background" aria-hidden="true"></div>
+        <div class="container">
 
-    <div class="container">
+            <div class="row between-md around-xs middle-xs">
+
+                <div class="col-sm-7 col-xs-12 ">
+                    {% component 'the_project2' %}
+                </div>
+                <div class="col-sm-5 col-xs-12 center-xs">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" aria-labelledby="objectives-heading">
         <div class="row top-xs">
             <div class="col-md-12 col-xs-12 objectives yellow">
                 {% component 'objectives' %}
             </div>
 
         </div>
-    </div>
+    </section>
 
-<div class="container" id="work-packages">
-    <div class="row top-xs">
-        <div class="col-md-12 col-xs-12 work_packages blue">
-            {% component 'accordion' %}
+    <section class="container" id="work-packages" aria-labelledby="work-packages-heading">
+        <div class="row top-xs">
+            <div class="col-md-12 col-xs-12 work_packages blue">
+                {% component 'accordion' %}
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+
+</main>

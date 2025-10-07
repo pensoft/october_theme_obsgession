@@ -93,79 +93,108 @@ $this['related'] = $related;
 }
 ?>
 ==
-<div class="container">
+<main id="main-content" role="main">
+    <div class="container">
 
-    {% if is_detail_page %}
-    <div class="back_to_list"><a href="/news">Back to all news</a></div>
-    <div class="row single-news-item">
+        {% if is_detail_page %}
+        <nav class="back_to_list" aria-label="Breadcrumb">
+            <a href="/news" aria-label="Back to all news">
+                <span aria-hidden="true">&nbsp;</span> Back to all news
+            </a>
+        </nav>
+        <article class="row single-news-item">
 
-        <div class="col-xs-12">
-            {% if article.cover %}
-            <img class="content left" src="{{ article.cover|crop_image|resize(774, auto, { mode: 'crop' }) }}" />
-            {% endif %}
-            {% if article.caption %}
-            <div class="caption">{{article.caption|raw}}</div>
-            {% endif %}
-        </div>
-        <div class="col-xs-12">
-            <div class="text-published">{{article.published_at|date("j M Y")}}</div>
-        </div>
-        <div class="col-xs-12 news-title">
-            <h1 class="single-new-title">{{article.title}}</h1>
-        </div>
-        <div class="col-xs-12">
-            <div class="content">
-                {{article.content|raw}}
+            <div class="col-xs-12">
+                {% if article.cover %}
+                <img class="content left" src="{{ article.cover|crop_image|resize(774, auto, { mode: 'crop' }) }}" alt="{{article.title}}" />
+                {% endif %}
+                {% if article.caption %}
+                <figcaption class="caption">{{article.caption|raw}}</figcaption>
+                {% endif %}
             </div>
-            <div class="row share_container middle-xs mt-2">
-                <div class="col-xs-12 center-xs share_label">Share</div>
-                <div class="col-xs-12 center-xs">
-                    <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}" target="_blank" class="pr p-twitter normal"></a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse" target="_blank" class="pr p-facebook big"></a>
-                    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}" target="_blank" class="pr p-linkedin big"></a>
+            <header class="col-xs-12">
+                <time class="text-published" datetime="{{article.published_at|date('Y-m-d')}}">{{article.published_at|date("j M Y")}}</time>
+            </header>
+            <div class="col-xs-12 news-title">
+                <h1 class="single-new-title">{{article.title}}</h1>
+            </div>
+            <div class="col-xs-12">
+                <div class="content">
+                    {{article.content|raw}}
                 </div>
-            </div>
-
-        </div>
-    </div>
-
-    {% else %}
-
-    <div class="news-list">
-        {% for record in records %}
-        {% spaceless %}
-        <div class="col-md-4 col-xs-12 news-item center-xs center-md">
-            <div class="row news_column">
-                <div class="text-published">{{ record.published_at|date("d M Y")}}</div>
-                <a href="{{'news'|page}}/{{record.slug}}">
-                    {% if record.cover %}
-                    <div class="news-image col-xs-12 center-xs">
-                        <img class="news-img-top" src="{{record.cover.getThumb(316, 186, {'mode': 'crop'})}}">
+                <nav class="row share_container middle-xs mt-2" aria-label="Share this article">
+                    <div class="col-xs-12 center-xs share_label">Share</div>
+                    <div class="col-xs-12 center-xs">
+                        <a href="http://twitter.com/share?text={{article.title}}&url={{page_url}}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="pr p-twitter normal"
+                           aria-label="Share on Twitter (opens in new window)">
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{page_url}}&amp;src=sdkpreparse"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="pr p-facebook big"
+                           aria-label="Share on Facebook (opens in new window)">
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{page_url}}"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="pr p-linkedin big"
+                           aria-label="Share on LinkedIn (opens in new window)">
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
                     </div>
-                    {% endif %}
-                    <div class="news-container col-xs-12">
-                        <div class="news-title">
-                            <h3 class="card-title">{{ record.title|length > 100 ? record.title|striptags|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h3>
-                        </div>
-                        <div class="body">{{ record.content|length > 100 ? record.content|striptags|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.content|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</div>
-                    </div>
+                </nav>
 
-                </a>
-                <a href="{{'news'|page}}/{{record.slug}}" class="read_more">Read more</a>
             </div>
+        </article>
 
-        </div>
-
-
-        {% endspaceless %}
         {% else %}
-        No news
-        {% endfor %}
+
+        <section aria-labelledby="news-heading">
+            <h1 id="news-heading" class="sr-only">News</h1>
+            <div class="news-list">
+                {% for record in records %}
+                {% spaceless %}
+                <article class="col-md-4 col-xs-12 news-item center-xs center-md">
+                    <div class="row news_column">
+                        <time class="text-published" datetime="{{record.published_at|date('Y-m-d')}}">{{ record.published_at|date("d M Y")}}</time>
+                        <a href="{{'news'|page}}/{{record.slug}}" aria-label="Read {{record.title}}">
+                            {% if record.cover %}
+                            <div class="news-image col-xs-12 center-xs">
+                                <img class="news-img-top" src="{{record.cover.getThumb(316, 186, {'mode': 'crop'})}}" alt="{{record.title}}">
+                            </div>
+                            {% endif %}
+                            <div class="news-container col-xs-12">
+                                <div class="news-title">
+                                    <h2 class="card-title">{{ record.title|length > 100 ? record.title|striptags|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.title|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</h2>
+                                </div>
+                                <div class="body">{{ record.content|length > 100 ? record.content|striptags|slice(0, 100)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.content|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</div>
+                            </div>
+
+                        </a>
+                        <a href="{{'news'|page}}/{{record.slug}}" class="read_more" aria-label="Read more about {{record.title}}">Read more</a>
+                    </div>
+
+                </article>
+
+
+                {% endspaceless %}
+                {% else %}
+                <div class="col-xs-12 text-center" role="status">
+                    <p>No news</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <nav class="row container" aria-label="Pagination">
+                {{ records.render|raw }}
+            </nav>
+        </section>
+
+        {% endif %}
     </div>
-
-    	<div class="row container">
-			{{ records.render|raw }}
-		</div>
-
-    {% endif %}
-</div>
+</main>

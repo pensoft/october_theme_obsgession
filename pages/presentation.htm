@@ -64,7 +64,8 @@ return Response::download($pathToFile, $fileName, $headers);
 
 ?>
 ==
-<div class="container">
+<main id="main-content" role="main">
+    <section class="container" aria-labelledby="presentations-heading">
 
         {% set records = mediaPresentationsList %}
         {% set displayColumn = mediaPresentationsList.displayColumn %}
@@ -78,16 +79,16 @@ return Response::download($pathToFile, $fileName, $headers);
             {% spaceless %}
             {% if record.presentation_image %}
 
-            <div class="col-md-4 col-xs-12">
-                <p align="center">{{record.name}}</p>
+            <div class="col-md-4 col-xs-12 mt-4">
+                <h2 class="text-center">{{record.name}}</h2>
                 <div class="flyer-container {{record.name}}">
-                    <img src="{{record.presentation_image.path}}" title="{{record.name}}">
+                    <img src="{{record.presentation_image.path}}" title="{{record.name}}" alt="{{record.name}} presentation">
                 </div>
                 <div class="links">
                     {% if record.file %}
                     {{form_open({ request: 'onDownloadFile' }) }}
                     <input type="hidden" value="{{record.file.id}}" name="id">
-                    <button type="submit" data-attach-loading class="btn btn-primary">Download</button>
+                    <button type="submit" data-attach-loading class="btn btn-primary" aria-label="Download {{record.name}}">Download</button>
                     {{ form_close() }}
                     {% endif %}
 
@@ -101,4 +102,5 @@ return Response::download($pathToFile, $fileName, $headers);
             {% endfor %}
         </div>
         {% endif %}
-</div>
+    </section>
+</main>

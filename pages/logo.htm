@@ -63,60 +63,77 @@ return Response::download($pathToFile, $fileName, $headers);
 }
 ?>
 ==
-<div class="container">
+<main id="main-content" role="main">
+    <section class="container" aria-labelledby="brand-materials-heading">
+<!--        <h1 id="brand-materials-heading" class="underline">Brand materials</h1>-->
 
+        {% set records = mediaLogosList %}
+        {% set displayColumn = mediaLogosList.displayColumn %}
+        {% set noRecordsMessage = mediaLogosList.noRecordsMessage %}
+        {% set detailsPage = mediaLogosList.detailsPage %}
+        {% set detailsKeyColumn = mediaLogosList.detailsKeyColumn %}
+        {% set detailsUrlParameter = mediaLogosList.detailsUrlParameter %}
 
-    {% set records = mediaLogosList %}
-    {% set displayColumn = mediaLogosList.displayColumn %}
-    {% set noRecordsMessage = mediaLogosList.noRecordsMessage %}
-    {% set detailsPage = mediaLogosList.detailsPage %}
-    {% set detailsKeyColumn = mediaLogosList.detailsKeyColumn %}
-    {% set detailsUrlParameter = mediaLogosList.detailsUrlParameter %}
-
-    {% if records.count() %}
+        {% if records.count() %}
         <div class="row">
             {% for record in records %}
             {% spaceless %}
             {% if record.logo_image %}
 
-            <div class="col-md-4 col-xs-12 mb-4">
+            <article class="col-md-4 col-xs-12 mb-4">
                 <div class="logo-container {{record.name}}">
-                    <img src="{{record.logo_image.path}}" title="{{record.name}}">
+                    <img src="{{record.logo_image.path}}" alt="{{record.name}} logo">
                 </div>
-                <p align="center">Download {{record.name}}</p>
+                <h2 class="text-center">Download {{record.name}}</h2>
                 <div class="links">
                     {% if record.file_jpg %}
                     {{form_open({ request: 'onDownloadFile' }) }}
                     <input type="hidden" value="{{record.file_jpg.id}}" name="id">
-                    <button type="submit" data-attach-loading class="btn btn-primary">JPG</button>
+                    <button type="submit"
+                            data-attach-loading
+                            class="btn btn-primary"
+                            aria-label="Download {{record.name}} logo in JPG format">JPG</button>
                     {{ form_close() }}
                     {% endif %}
 
                     {% if record.file_png %}
                     {{form_open({ request: 'onDownloadFile' }) }}
                     <input type="hidden" value="{{record.file_png.id}}" name="id">
-                    <button type="submit" data-attach-loading class="btn btn-primary">PNG</button>
+                    <button type="submit"
+                            data-attach-loading
+                            class="btn btn-primary"
+                            aria-label="Download {{record.name}} logo in PNG format">PNG</button>
                     {{ form_close() }}
                     {% endif %}
 
                     {% if record.file_eps %}
                     {{form_open({ request: 'onDownloadFile' }) }}
                     <input type="hidden" value="{{record.file_eps.id}}" name="id">
-                    <button type="submit" data-attach-loading class="btn btn-primary">SVG</button>
+                    <button type="submit"
+                            data-attach-loading
+                            class="btn btn-primary"
+                            aria-label="Download {{record.name}} logo in SVG vector format">SVG</button>
                     {{ form_close() }}
                     {% endif %}
 
                     {% if record.file_pdf %}
-                    <a class="btn btn-primary" target="_blank" href="{{record.file_pdf.path}}">PDF</a>
+                    <a class="btn btn-primary"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       href="{{record.file_pdf.path}}"
+                       aria-label="Download {{record.name}} logo in PDF format (opens in new window)">PDF</a>
                     {% endif %}
                 </div>
-            </div>
+            </article>
             {% endif %}
 
             {% endspaceless %}
             {% else %}
-            {{ noRecordsMessage }}
+            <div class="col-xs-12 text-center" role="status">
+                <p>{{ noRecordsMessage }}</p>
+            </div>
             {% endfor %}
         </div>
-    {% endif %}
-</div>
+        {% endif %}
+    </section>
+</main>
