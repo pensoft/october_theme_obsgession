@@ -234,7 +234,7 @@ $(document).ready(function() {
         $('#slick').slick({
             centerMode: true,
             centerPadding: '50px',
-            slidesToShow: 3,            
+            slidesToShow: 3,
             focusOnSelect: true,
             dots: true,
             responsive: [
@@ -372,7 +372,7 @@ $(document).ready(function() {
         $(value).find('a').attr( "onclick", "window.open(this.href, '_blank');" )
     });
 
-    $(".partner_description a").click(function() {
+    $(".partner_description a.read_more").click(function() {
         var $el, $ps, $up, totalHeight;
         totalHeight = 75;
         $el = $(this) // read-more link
