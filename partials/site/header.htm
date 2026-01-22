@@ -12,7 +12,6 @@ background = "transperant"
 templates = "template1"
 description_limit = 0
 ==
-
 {% if user %}
 <nav class="fixed navbar-loggedin-user" aria-label="User account navigation">
     <div class="navbar-collapse collapse row middle-xs">
@@ -39,9 +38,7 @@ description_limit = 0
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
-        <div id="mobile-menu">
-            {% component 'menu' %}
-        </div>
+        {% component 'menu' %}
     </div>
     <a href="{{'home'|page}}" class="navbar-brand" aria-label="Home" style="background-image: url('{{ this.theme.site_logo.getPath() }}'); background-position: center; background-size: contain;">
         <span class="sr-only">Home</span>
