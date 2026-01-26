@@ -7,9 +7,15 @@ robot_follow = "follow"
 ==
 <?php
 use Pensoft\Partners\Models\Partners;
+use Pensoft\Cardprofiles\Models\Profiles;
 
 function onStart(){
 	$this['partners'] =  Partners::where('type', 1)->get();
+    $this['insider_members'] = new class {
+        public function getIM($id) {
+            return Profiles::where('partner_id', $id)->where('category_id',  2)->get();
+        }
+    };
 }
 ?>
 ==
@@ -39,11 +45,46 @@ function onStart(){
                              role="region"
                              aria-labelledby="partner-toggle-{{k}}">
                             {{partner.content|raw}}
+                            {% if insider_members.getIM(partner.id).count > 0 %}
+
+                                    <div class="members-content">
+                                        {% for profile in insider_members.getIM(partner.id) %}
+                                        <article class="contact_info row">
+                                            <div class="col-md-1 col-xs-12 coordinator_image">
+                                                {% if profile.avatar %}
+                                                <img alt="{{profile.names}}" src="{{profile.avatar|crop_image}}">
+                                                {% else %}
+                                                <img alt="{{profile.names}}" src="{{ 'avatar.svg'|media }}" width="78" height="78" class="no-image">
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-9 col-xs-12 coordinator_info">
+                                                <div class="info">
+                                                    <h3>{{ profile.names }}</h3>
+                                                    {% if profile.position %} <div class="role">{{ profile.position }}</div>{% endif %}
+                                                    {% if profile.department %} <div class="role">{{ profile.department }}</div>{% endif %}
+                                                </div>
+
+                                                <div class="body" id="bio-{{profile.id}}" hidden>{{ profile.content|raw }}</div>
+
+                                            </div>
+                                            <div class="col-md-2 col-xs-12 end-md center-xs">
+                                                <a class="read-more"
+                                                   onclick="expandBiography(this);"
+                                                   aria-expanded="false"
+                                                   aria-controls="bio-{{profile.id}}"
+                                                   aria-label="Show biography for {{ profile.names }}">Read biography</a>
+                                            </div>
+                                        </article>
+                                        {% endfor %}
+                                    </div>
+                            {% endif %}
+
                         </div>
                         <a class="read_more"
-                                id="partner-toggle-{{k}}"
-                                aria-expanded="true"
-                                aria-controls="partner-content-{{k}}">Read more</a>
+                           onclick="expandPartner(this);"
+                           aria-expanded="false"
+                           id="partner-toggle-{{k}}"
+                           aria-controls="partner-content-{{k}}">Show members</a>
                     </div>
                 </article>
 
