@@ -52,7 +52,7 @@ function onStart(){
                                         <article class="contact_info row">
                                             <div class="col-md-1 col-xs-12 coordinator_image">
                                                 {% if profile.avatar %}
-                                                <img alt="{{profile.names}}" src="{{profile.avatar|crop_image}}">
+                                                <img alt="{{profile.names}}" src="{{profile.avatar.thumb(78,78,{'mode':'crop'})}}">
                                                 {% else %}
                                                 <img alt="{{profile.names}}" src="{{ 'avatar.svg'|media }}" width="78" height="78" class="no-image">
                                                 {% endif %}
