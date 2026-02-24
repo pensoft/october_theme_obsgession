@@ -76,14 +76,17 @@ theme = "dark-bottom"
                             </ul>
 
                             <h2 class="head hidden-xs">Follow OBSGESSION</h2>
+
                         </nav>
                         <nav class="col-xs-12 col-md-3 start-md center-xs col-sm-6 start-sm" aria-labelledby="links-heading">
                             <h2 id="links-heading" class="head">Links</h2>
                             {% component 'links_menu' %}
+
                         </nav>
                         <nav class="col-xs-12 col-md-3 start-md center-xs col-sm-6 start-sm" aria-labelledby="events-heading">
                             <h2 id="events-heading" class="head sr-only">Events</h2>
                             {% component 'events_menu' %}
+                            <a class="button_rio" href="https://riojournal.com/topical_collection/338/" target="_blank" aria-label="Visit RIO Journal topical collection">&nbsp;</a>
 
                         </nav>
                     </div>
@@ -131,6 +134,7 @@ theme = "dark-bottom"
                                 </a>
                                 {% endif %}
                             </div>
+
                         </nav>
                         <div class="col-md-7 col-xs-12 start-md center-xs">
                             {% if this.theme.subscribe %}
