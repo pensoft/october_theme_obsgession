@@ -375,13 +375,17 @@ $(document).ready(function() {
 });
 
 function openModalBtn(){
-    // if (getCookie('modalClosed')) {
-    //     return; // Don't open if cookie is set
-    // }
+    if (getCookie('modalClosed')) {
+        return;
+    }
 
     setTimeout(function() {
         $(".openModalBtn").trigger("click");
     }, 10);
+
+    $('#content-confirmation').on('hidden.bs.modal', function () {
+        setCookie('modalClosed', '1', 7);
+    });
 }
 
 // Cookie helper functions (add these if not already present)
