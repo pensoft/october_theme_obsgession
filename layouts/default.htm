@@ -11,9 +11,12 @@ escape = 1
 
 [googleTracker]
 
-[cookieBanner]
-include_css = 1
-update_selector = "#gdpr-reload"
+[jumbotron popup]
+jumbotron = "explore-our-collection-rio-journal"
+title = 1
+background = "transperant"
+templates = "template3"
+description_limit = 0
 ==
 <!DOCTYPE html>
 <html>
@@ -38,6 +41,7 @@ update_selector = "#gdpr-reload"
 
     {% if this.page.id == 'home' %}
         <script type="text/javascript" src="{{ 'assets/js/slick.min.js'|theme }}"></script>
+        <script src="{{ 'assets/vendor/bootstrap/js/modal.js'|theme  }}"></script>
     {% endif %}
 
     <link rel="stylesheet" href="{{ 'assets/css/aos.css'|theme }}">
@@ -78,7 +82,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Matomo Code -->
 </head>
 
-<body>
+<body {% if this.page.id == 'home' %} onload="openModalBtn();" {% endif %}>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWW5NKQ"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -96,8 +100,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         %}
     </header>
 
+
+
     <!-- Content -->
     <section id="layout-content" class="{{this.page.id}}">
+        {% if this.page.id == 'home' %}
+        <!-- popup markup -->
+        <a data-toggle="modal" href="#content-confirmation" class="openModalBtn" style="display: none;">Launch Training dialog</a>
+
+        <div class="control-popup modal fade joinModal" id="content-confirmation" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content center-xs">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <img src="{{'bear.png'|media}}" alt="Featured image for the training" role="img">
+                    {% component 'popup' %}
+                </div>
+            </div>
+        </div>
+
+        {% endif %}
         {% page %}
         {% component 'googleTracker' %}
     </section>
@@ -139,6 +160,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 
 </body>
-{% component 'cookieBanner' %}
+
 
 </html>

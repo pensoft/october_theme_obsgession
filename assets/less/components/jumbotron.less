@@ -108,7 +108,7 @@
         align-items: start;
         padding: 0;
         color: #656565;
-        
+
         h1.display-1{
             margin-top: 0px!important;
             margin-bottom: 10px!important;
@@ -522,6 +522,104 @@
         }
     }
 }
+
+
+.joinModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 45, 44, 0.5);
+    //backdrop-filter: blur(10px);
+    //-webkit-backdrop-filter: blur(10px);
+    z-index: 99999999;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &.in {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-dialog {
+        width: 92vw;
+        max-width: 472px;
+        margin: 0px auto;
+        position: relative;
+        top: calc(~'50vh - 220px');
+        height: 483px;
+        max-height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+
+        .breakpoint-medium-down({
+            width: 96vw;
+            margin: 12px auto;
+        });
+    }
+
+    .modal-content {
+        background: #fff;
+        border-radius: 20px;
+        border: none;
+        box-shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+    }
+
+    // Close button
+    .close {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        font-size: 32px;
+        font-weight: 100;
+        color: white;
+        z-index: 2;
+        text-shadow: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        text-align: center;
+        border-radius: 50%;
+        padding: 0;
+        transition: all 0.15s ease;
+
+        &:hover {
+            opacity: 1;
+            background: #F2FBFA;
+        }
+    }
+
+    .modal-content{
+        .container{
+            padding: 0 29px 50px 29px;
+            .breakpoint-large-down({
+                padding: 0 20px 20px 20px;
+            });
+            .btn{
+                border-radius: 20px;
+                font-weight: bold;
+                padding-top: 13px;
+                padding-bottom: 13px;
+            }
+        }
+    }
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
 
 
 

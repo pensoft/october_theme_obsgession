@@ -372,61 +372,39 @@ $(document).ready(function() {
         $(value).find('a').attr( "onclick", "window.open(this.href, '_blank');" )
     });
 
-    // $(".partner_description a.read_more").click(function() {
-    //     var $el, $ps, $up, totalHeight;
-    //     totalHeight = 75;
-    //     $el = $(this) // read-more link
-    //
-    //     $up  = $el.parent(); // partner_description
-    //     if ($el.text() == "Read more") {
-    //
-    //         $ps = $up.find(".partner_content p, .partner_content .members-content article");
-    //
-    //         // measure how tall inside should be by adding together heights of all inside paragraphs (except read-more paragraph)
-    //         $ps.each(function() {
-    //             totalHeight += $(this).outerHeight();
-    //         });
-    //
-    //         $up.addClass('changed');
-    //
-    //         $el.css({
-    //             top: totalHeight - 14
-    //         });
-    //         $up.css({
-    //             // Set height to prevent instant jumpdown when max height is removed
-    //             "height": $up.height() - 45,
-    //             "max-height": 9999,
-    //         })
-    //             .animate({
-    //                 "height": totalHeight
-    //             });
-    //         //Stuff to do when btn is in the read more state
-    //         $el.html("<a href=\"javascript:void(0);\">Read less</a>");
-    //         // $up.slideDown();
-    //     } else {
-    //         $up.removeClass('changed');
-    //         $el.css({
-    //             top: 100
-    //         });
-    //         $up.css({
-    //             // Set height to prevent instant jumpdown when max height is removed
-    //             "height": $up.height(),
-    //             "max-height": 460,
-    //         })
-    //             .animate({
-    //                 "height": totalHeight + 65
-    //             });
-    //         //Stuff to do when btn is in the read less state
-    //         $el.html("<a href=\"javascript:void(0);\">Read more</a>");
-    //
-    //         $('html, body').animate({
-    //             scrollTop:  $up.offset().top - $('header').height()
-    //         });
-    //     }
-    //     return false;
-    //
-    // });
 });
+
+function openModalBtn(){
+    // if (getCookie('modalClosed')) {
+    //     return; // Don't open if cookie is set
+    // }
+
+    setTimeout(function() {
+        $(".openModalBtn").trigger("click");
+    }, 10);
+}
+
+// Cookie helper functions (add these if not already present)
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
 
 function expandBiography(el){
     $el = $(el) // read-more link
