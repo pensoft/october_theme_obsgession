@@ -194,8 +194,10 @@ ul.pagination{
 
     .jumbotron{
         p{
-            font-size: 54px;
-            line-height: 71px;
+            //font-size: 54px;
+            //line-height: 71px;
+            font-size: 47px;
+            line-height: 57px;
             color: @white-color;
             font-weight: bold;
             .breakpoint-laptop-down({
@@ -968,7 +970,11 @@ width: 85%;
         vertical-align: middle;
         display: flex;
         align-items: center;
-        margin-top: 50px;
+        margin-top: 10px;
+
+        .breakpoint-large-down({
+            margin-top: 0;
+        });
         a{
             color: white;
         }
