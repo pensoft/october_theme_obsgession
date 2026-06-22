@@ -1,0 +1,112 @@
+url = "/factsheets"
+layout = "default"
+title = "Factsheets"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+
+[builderList mediaDocumentsList]
+modelClass = "pensoft\Media\Models\Documents"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "title"
+noRecordsMessage = "No records found"
+detailsPage = "-"
+detailsUrlParameter = "id"
+pageNumber = "{{ :page }}"
+==
+<?php
+use Pensoft\Media\Models\Documents;
+use System\Models\File;
+
+function onStart(){
+	$this['mediaDocumentsList'] =  Documents::get();
+	if(get('download')){
+		$file = File::find((int)get('download'));
+		$file_name = $file->getLocalPath();
+$recordName = get('file_name') ? get('file_name') : 'OBSGESSION_fact_sheet';
+$ext= $file->getExtension();
+
+if (file_exists($file_name)) {
+header('Content-Description: File Transfer');
+header('Content-Type: application/octet-stream');
+header("Content-Type: application/force-download");
+header('Content-Disposition: attachment; filename='.$recordName .'.'. $ext);
+header('Content-Transfer-Encoding: binary');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
+header('Content-Length: ' . filesize($file_name));
+ob_clean();
+flush();
+readfile($file_name);
+exit();
+}
+return Redirect::to('/fact-sheets');
+}
+
+}
+
+function onDownloadFile(){
+$file = File::find(post('id'));
+$pathToFile = $file->getLocalPath();
+$fileName = $file->file_name;
+$fileType = $file->content_type;
+$headers = [
+'HTTP/1.1 200 OK',
+'Pragma: public',
+'Content-Type: '.$fileType,
+'Content-Type: application/force-download'
+];
+
+return Response::download($pathToFile, $fileName, $headers);
+}
+?>
+==
+<main id="main-content" role="main">
+    <section class="container" aria-labelledby="fact-sheets-heading">
+<!--        <h1 id="fact-sheets-heading" class="underline">Fact sheets</h1>-->
+
+        {% set records = mediaDocumentsList %}
+        {% set displayColumn = mediaDocumentsList.displayColumn %}
+        {% set noRecordsMessage = mediaDocumentsList.noRecordsMessage %}
+        {% set detailsPage = mediaDocumentsList.detailsPage %}
+        {% set detailsKeyColumn = mediaDocumentsList.detailsKeyColumn %}
+        {% set detailsUrlParameter = mediaDocumentsList.detailsUrlParameter %}
+
+        {% if records.count() %}
+        <div class="row">
+            {% for record in records %}
+            {% spaceless %}
+            {% if record.image %}
+
+            <article class="col-md-4 col-xs-12 mb-4">
+                <h2 class="text-center">{{record.title}}</h2>
+                <div class="flyer-container {{record.title}}">
+                    <img src="{{record.image.path}}" alt="{{record.title}} fact sheet">
+                </div>
+                <div class="links">
+                    {% if record.file %}
+                    {{form_open({ request: 'onDownloadFile' }) }}
+                    <input type="hidden" value="{{record.file.id}}" name="id">
+                    <button type="submit"
+                            data-attach-loading
+                            class="btn btn-primary"
+                            aria-label="Download {{record.title}}">Download</button>
+                    {{ form_close() }}
+                    {% endif %}
+
+                </div>
+            </article>
+            {% endif %}
+
+            {% endspaceless %}
+            {% else %}
+            <div class="col-xs-12 text-center" role="status">
+                <p>{{ noRecordsMessage }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </section>
+</main>
