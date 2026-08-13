@@ -81,7 +81,10 @@ return Response::download($pathToFile, $fileName, $headers);
             <p class="card_title">{{ record.name|length > 65 ? record.name|striptags|slice(0, 65)|replace({"&nbsp;": " ", ".": ". "}) ~ '...' : record.name|striptags|replace({"&nbsp;": " ", ".": ". "})  }}</p>
             {% if record.file %}
             <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
-            <p align="center"><a class=" btn btn-primary" href="{{ ''| page }}?{{queries}}&download={{record.file.id}}&file_name={{record.name|replace({' ': '_'})}}">Download</a></p>
+            <p align="center"><a class=" btn btn-primary"
+                                 href="{{record.file.path}}"
+                                 download="{{record.file.file_name}}"
+                                 aria-label="Download {{record.name}}">Download</a></p>
 
             {% endif %}
 
