@@ -95,23 +95,23 @@ description_limit = 0
    !important` on this element to outrank the shared .header-image rules in
    themes/master, and only an inline important declaration beats that.
 
-     67 - Pilot 1  Multiscale ... European Alps                1080x1080
-     71 - Pilot 2  Mapping & Monitoring of European habitats    5316x3112
-     70 - Pilot 3  Monitoring/forecasting forest productivity   5712x3113
-     73 - Pilot 4  Ecosystem condition, temperate/boreal        5712x2796
-     69 - Pilot 5  Monitoring freshwater ecosystem functioning  4723x3113
-     72 - Pilot 6  Ecosystem functioning and water quality      4723x2904 #}
+     342 - Pilot 1  Multiscale ... European Alps                
+     343  - Pilot 2  Mapping & Monitoring of European habitats    
+     344 - Pilot 3  Monitoring/forecasting forest productivity   
+     345 - Pilot 4  Ecosystem condition, temperate/boreal        
+     346 - Pilot 5  Monitoring freshwater ecosystem functioning  
+     347 - Pilot 6  Ecosystem functioning and water quality #}
 {% set cover_positions = {
-    67: '20%',
-    71: 'center',
-    70: 'center',
-    73: '90%',
-    69: '20%',
-    72: '80%'
+    342: 'center',
+    343 : '20%',
+    344: 'center',
+    345: 'center',
+    346: 'center',
+    347: '60%'
 } %}
 {% set cover_position_y = cover_positions[header_cover.id] ?? 'center' %}
 
-<div class="header-image header-image--cover {{page_id}} {% if user %}logged-in-header{% endif %}" role="banner">
+<div class="header-image header-image--cover {{header_cover.id}} {{page_id}} {% if user %}logged-in-header{% endif %}" role="banner">
     <div class="header-image-bar" style="background-image: url('{{ header_cover.path }}'); background-position-y: {{ cover_position_y }} !important;">
         <div class="container header-content">
             {% if header_back_url %}

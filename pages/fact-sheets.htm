@@ -26,7 +26,7 @@ function onStart()
 
             <div class="col-md-4 col-xs-12 cs_item">
                 <a class="cs_wrapper"
-                   href="/factsheets/{{ record.slug }}"
+                   href="/pilot/{{ record.slug }}"
                    {% if record.cover %}style="background-image: url('{{ record.cover|crop_image|resize(396, 398, { mode: 'crop' }) }}');"{% endif %}>
                     <span class="cs_title">{{ record.title }}</span>
                 </a>
