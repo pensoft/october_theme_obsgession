@@ -1,0 +1,94 @@
+title = "Download"
+url = "/download/:id/:filename"
+is_hidden = 0
+robot_index = "noindex"
+robot_follow = "nofollow"
+==
+<?php
+use Illuminate\Database\Eloquent\Relations\Relation;
+use System\Models\File;
+
+/**
+ * Serves a media-center attachment under its ORIGINAL filename.
+ *
+ * October stores uploads under a randomised disk name, so the natural
+ * href ({{ file.path }}) looks like
+ *
+ *     /storage/app/uploads/public/5a8/b2c/3d4/68f1a2b3c4d5e6.pdf
+ *
+ * which is what Matomo records in the Downloads report -- unreadable.
+ * Linking here instead makes the tracked URL
+ *
+ *     /download/123/obsgession-factsheet-2025.pdf
+ *
+ * The id is what actually resolves the file; the filename segment exists so
+ * the URL is self-describing in analytics, and is verified against the stored
+ * name so the same file cannot be tracked under a dozen invented URLs.
+ */
+function onStart()
+{
+    $file = File::find((int) $this->param('id'));
+
+    if (!$file) {
+        return Response::make('File not found', 404);
+    }
+
+    // Only public media-center attachments are servable here. Without this the
+    // route would hand out any row in system_files by guessing its id,
+    // including the login-protected internal repository documents.
+    $allowedOwners = [
+        \Pensoft\Media\Models\MediaLogos::class,
+        \Pensoft\Media\Models\Flyers::class,
+        \Pensoft\Media\Models\Documents::class,
+        \Pensoft\Media\Models\Newsletters::class,
+        \Pensoft\Media\Models\Presentations::class,
+        \Pensoft\Media\Models\Videos::class,
+        \Pensoft\Media\Models\Webinars::class,
+        \Pensoft\Media\Models\Galleries::class,
+        \Pensoft\Media\Models\Graphic::class,
+        \Pensoft\Media\Models\Pressreleases::class,
+        \Pensoft\Media\Models\Podcasts::class,
+        \Pensoft\Media\Models\Books::class,
+        \Pensoft\Library\Models\Library::class,
+        \Pensoft\Factsheets\Models\Factsheet::class,
+    ];
+
+    // attachment_type holds the owner class, or its alias if a morph map is
+    // ever registered -- resolve it back to the class name either way.
+    $owner = Relation::getMorphedModel($file->attachment_type) ?: $file->attachment_type;
+
+    if (!in_array($owner, $allowedOwners, true)) {
+        return Response::make('File not found', 404);
+    }
+
+    // The path segment may or may not arrive percent-decoded depending on the
+    // web server, so check it both ways before rejecting it.
+    $requested = (string) $this->param('filename');
+    $variants = [$requested, rawurldecode($requested), urldecode($requested)];
+
+    if (!in_array($file->file_name, $variants, true)) {
+        return Redirect::to($this->downloadUrl($file), 301);
+    }
+
+    $localPath = $file->getLocalPath();
+
+    if (!file_exists($localPath)) {
+        return Response::make('File not found', 404);
+    }
+
+    return Response::download($localPath, $file->file_name, [
+        'Content-Type'  => $file->content_type ?: 'application/octet-stream',
+        'Cache-Control' => 'public, max-age=86400',
+    ]);
+}
+
+/**
+ * downloadUrl builds the canonical, filename-bearing URL for an attachment.
+ * The page code section is compiled into a class, so this is a method.
+ */
+function downloadUrl($file)
+{
+    return '/download/' . $file->id . '/' . rawurlencode($file->file_name);
+}
+?>
+==

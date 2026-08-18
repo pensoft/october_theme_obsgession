@@ -75,7 +75,56 @@ description_limit = 0
 
 
 
-{% if this.theme.header_image %}
+{% if header_cover %}
+{# Detail pages (e.g. a single factsheet) supply their own cover image and
+   heading, rendered as a full-bleed banner with a dark scrim over it, with
+   the back link and title left-aligned inside the container. #}
+
+{# Vertical framing of the cover, per pilot. The banner is a ~200px band across
+   the full width, so background-size: cover throws away most of each image --
+   roughly 90% of the square pilot 1 cover and 80% of the wide ones -- which
+   makes the surviving slice worth choosing per image.
+
+   Keyed on the cover file id, the only per-pilot value this partial is handed.
+   Re-uploading a cover mints a new id, so its entry has to be updated along
+   with the image; any cover without an entry falls back to centred.
+
+   Values are anything background-position-y takes: a percentage, a length, or
+   top / center / bottom. The !important below is not optional --
+   assets/less/pages/factsheets.less sets `background-position: center center
+   !important` on this element to outrank the shared .header-image rules in
+   themes/master, and only an inline important declaration beats that.
+
+     67 - Pilot 1  Multiscale ... European Alps                1080x1080
+     71 - Pilot 2  Mapping & Monitoring of European habitats    5316x3112
+     70 - Pilot 3  Monitoring/forecasting forest productivity   5712x3113
+     73 - Pilot 4  Ecosystem condition, temperate/boreal        5712x2796
+     69 - Pilot 5  Monitoring freshwater ecosystem functioning  4723x3113
+     72 - Pilot 6  Ecosystem functioning and water quality      4723x2904 #}
+{% set cover_positions = {
+    67: '20%',
+    71: 'center',
+    70: 'center',
+    73: '90%',
+    69: '20%',
+    72: '80%'
+} %}
+{% set cover_position_y = cover_positions[header_cover.id] ?? 'center' %}
+
+<div class="header-image header-image--cover {{page_id}} {% if user %}logged-in-header{% endif %}" role="banner">
+    <div class="header-image-bar" style="background-image: url('{{ header_cover.path }}'); background-position-y: {{ cover_position_y }} !important;">
+        <div class="container header-content">
+            {% if header_back_url %}
+            <a class="header-content__back" href="{{ header_back_url }}">
+                <img src="{{ 'assets/images/icon-back-arrow.svg'|theme }}" alt="" width="14" height="14" aria-hidden="true">
+                <span>{{ header_back_label|default('Back') }}</span>
+            </a>
+            {% endif %}
+            <h1 class="header-content__title">{{ header_heading|default(page_title) }}</h1>
+        </div>
+    </div>
+</div>
+{% elseif this.theme.header_image %}
 <div class="header-image {{page_id}} {% if user %}logged-in-header{% endif %}" role="banner">
     {% if page_id != 'search' and page_id != 'home' %}
     <div class="header-image-bar" style="background-image: url('{{this.theme.header_image.getPath()}}'); background-position: left center;" role="img" aria-label="Header banner">

@@ -1,0 +1,173 @@
+url = "/factsheets/:slug|[a-zA-Z\-0-9]"
+layout = "default"
+title = "Factsheet"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use Pensoft\Factsheets\Models\Factsheet;
+
+function onStart()
+{
+    $factsheet = Factsheet::with('cover', 'file', 'subsections.image')
+        ->where('slug', $this->param('slug'))
+        ->first();
+
+    if (!$factsheet) {
+        abort(404);
+    }
+
+    $this['factsheet'] = $factsheet;
+
+    // The richeditor stores each subsection as a run of block elements. Anything
+    // past the first paragraph is folded behind a "Read more" toggle, so split
+    // the HTML at the first closing tag rather than re-parsing it: the two
+    // halves concatenate back to the original byte for byte, whatever markup
+    // the editor produced.
+    $this['subsections'] = $factsheet->subsections->map(function ($subsection) {
+        $html = (string) $subsection->description;
+        $break = stripos($html, '</p>');
+
+        $lead = $html;
+        $more = '';
+
+        if ($break !== false) {
+            $lead = substr($html, 0, $break + 4);
+            $more = trim(substr($html, $break + 4));
+        }
+
+        return [
+            'id' => $subsection->id,
+            'title' => $subsection->title,
+            'image' => $subsection->image,
+            'lead' => $lead,
+            'more' => $more,
+        ];
+    });
+
+    // Consumed by partials/site/header.htm via layouts/default.htm, so the
+    // banner uses this factsheet's cover image and title instead of the
+    // site-wide theme header image.
+    $this['header_cover'] = $factsheet->cover;
+    $this['header_heading'] = $factsheet->title;
+
+    // Resolved from the page file name rather than hard-coded, so the link
+    // follows the listing page if its URL changes.
+    $this['header_back_url'] = $this->pageUrl('fact-sheets');
+    $this['header_back_label'] = 'Back to Pilots';
+
+    $this->page->title = $factsheet->title;
+}
+?>
+==
+{# Ambient background blobs, same treatment as the about page. #}
+<div class="background_bubble1" aria-hidden="true"></div>
+<div class="background_bubble2" aria-hidden="true"></div>
+<div class="background_bubble3" aria-hidden="true"></div>
+<div class="background_bubble4" aria-hidden="true"></div>
+
+<main id="main-content" role="main" class="factsheet-detail">
+
+    {# A subsection with an image becomes an alternating text/image band; one
+       without an image becomes the full-width highlight card. #}
+    {% set mediaCount = 0 %}
+    {% for subsection in subsections %}
+
+        {% if subsection.image %}
+            {% set mediaCount = mediaCount + 1 %}
+            {% set mediaRight = mediaCount is odd %}
+
+            <section class="container-fluid factsheet-section {{ mediaRight ? 'factsheet-section--media-right' : 'factsheet-section--media-left' }}"
+                     data-aos="{{ mediaRight ? 'fade-right' : 'fade-left' }}">
+                <div class="container">
+                    <div class="row middle-xs">
+
+                        {% if not mediaRight %}
+                        <div class="col-md-6 col-xs-12 factsheet-section__media-col">
+                            <div class="factsheet-section__media">
+                                <img src="{{ subsection.image.path }}" alt="{{ subsection.title }}">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="col-md-6 col-xs-12 factsheet-section__body">
+                            {% if subsection.title %}
+                            <h2>{{ subsection.title }}</h2>
+                            {% endif %}
+                            {% if subsection.lead %}
+                            {% partial 'components/factsheet-body' subsection=subsection %}
+                            {% endif %}
+                        </div>
+
+                        {% if mediaRight %}
+                        <div class="col-md-6 col-xs-12 factsheet-section__media-col">
+                            <div class="factsheet-section__media">
+                                <img src="{{ subsection.image.path }}" alt="{{ subsection.title }}">
+                            </div>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </section>
+
+        {% else %}
+
+            <section class="container factsheet-highlight-wrap" data-aos="fade-up">
+                <div class="factsheet-highlight">
+                    {% if subsection.title %}
+                    <h2>{{ subsection.title }}</h2>
+                    {% endif %}
+                    {% if subsection.lead %}
+                    {% partial 'components/factsheet-body' subsection=subsection %}
+                    {% endif %}
+                </div>
+            </section>
+
+        {% endif %}
+
+    {% endfor %}
+
+    {% if factsheet.file %}
+    <div class="container factsheet-download">
+        <a class="factsheet-download__btn"
+           href="/download/{{ factsheet.file.id }}/{{ factsheet.file.file_name|url_encode }}"
+           download="{{ factsheet.file.file_name }}"
+           aria-label="Download {{ factsheet.title }}">
+            <img src="{{ 'assets/images/icon-download-white.svg'|theme }}" alt="" width="17" height="18" aria-hidden="true">
+            <span>Download the factsheet</span>
+        </a>
+    </div>
+    {% endif %}
+
+</main>
+
+<script>
+    $(function () {
+        $('.factsheet-collapsible').each(function () {
+            var $wrapper = $(this),
+                $more = $wrapper.find('.factsheet-collapsible__more').first(),
+                $toggle = $wrapper.find('.factsheet-collapsible__toggle').first();
+
+            if (!$more.length || !$toggle.length) {
+                return;
+            }
+
+            // Collapsing happens here rather than in the markup so the whole
+            // description stays readable when this script does not run.
+            $more.hide();
+            $toggle.attr('aria-expanded', 'false').removeAttr('hidden');
+
+            $toggle.on('click', function () {
+                var expanded = $toggle.attr('aria-expanded') === 'true';
+
+                $toggle.attr('aria-expanded', expanded ? 'false' : 'true');
+                $toggle.find('.factsheet-collapsible__label')
+                    .text(expanded ? 'Read more' : 'Read less');
+
+                $more.stop(true, true).slideToggle(300);
+            });
+        });
+    });
+</script>

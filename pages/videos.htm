@@ -82,7 +82,7 @@ return Response::download($pathToFile, $fileName, $headers);
             {% if record.file %}
             <video controls="" width="100%"><source src="{{record.file.path}}" type="video/mp4"></video>
             <p align="center"><a class=" btn btn-primary"
-                                 href="{{record.file.path}}"
+                                 href="/download/{{record.file.id}}/{{record.file.file_name|url_encode}}"
                                  download="{{record.file.file_name}}"
                                  aria-label="Download {{record.name}}">Download</a></p>
 

@@ -1,0 +1,29 @@
+{# Rich text for one factsheet subsection.
+
+   When the description holds more than one block, everything after the first
+   paragraph is folded behind the "Read more" toggle from the Figma design
+   ("OBSGESSION - Pilots", node 4:183).
+
+   The hidden half is present in the markup and open by default; the page script
+   collapses it and reveals the button on load, so the full text still reads
+   with JavaScript unavailable. #}
+<div class="body{% if subsection.more %} factsheet-collapsible{% endif %}">
+    {{ subsection.lead|raw }}
+
+    {% if subsection.more %}
+    <div class="factsheet-collapsible__more" id="factsheet-more-{{ subsection.id }}">
+        {{ subsection.more|raw }}
+    </div>
+
+    <button type="button"
+            class="factsheet-collapsible__toggle"
+            aria-expanded="true"
+            aria-controls="factsheet-more-{{ subsection.id }}"
+            hidden>
+        <img class="factsheet-collapsible__icon"
+             src="{{ 'assets/images/icon-chevron-down.svg'|theme }}"
+             alt="" width="15" height="15" aria-hidden="true">
+        <span class="factsheet-collapsible__label">Read more</span>
+    </button>
+    {% endif %}
+</div>

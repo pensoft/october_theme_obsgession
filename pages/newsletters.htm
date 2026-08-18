@@ -84,7 +84,7 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="links">
                     {% if record.file %}
                     <a class="btn btn-primary"
-                       href="{{record.file.path}}"
+                       href="/download/{{record.file.id}}/{{record.file.file_name|url_encode}}"
                        download="{{record.file.file_name}}"
                        aria-label="Download {{record.name}}">Download</a>
                     {% endif %}

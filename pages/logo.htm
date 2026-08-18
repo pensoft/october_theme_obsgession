@@ -88,28 +88,28 @@ return Response::download($pathToFile, $fileName, $headers);
                 <div class="links">
                     {% if record.file_jpg %}
                     <a class="btn btn-primary"
-                       href="{{record.file_jpg.path}}"
+                       href="/download/{{record.file_jpg.id}}/{{record.file_jpg.file_name|url_encode}}"
                        download="{{record.file_jpg.file_name}}"
                        aria-label="Download {{record.name}} logo in JPG format">JPG</a>
                     {% endif %}
 
                     {% if record.file_png %}
                     <a class="btn btn-primary"
-                       href="{{record.file_png.path}}"
+                       href="/download/{{record.file_png.id}}/{{record.file_png.file_name|url_encode}}"
                        download="{{record.file_png.file_name}}"
                        aria-label="Download {{record.name}} logo in PNG format">PNG</a>
                     {% endif %}
 
                     {% if record.file_eps %}
                     <a class="btn btn-primary"
-                       href="{{record.file_eps.path}}"
+                       href="/download/{{record.file_eps.id}}/{{record.file_eps.file_name|url_encode}}"
                        download="{{record.file_eps.file_name}}"
                        aria-label="Download {{record.name}} logo in SVG vector format">SVG</a>
                     {% endif %}
 
                     {% if record.file_pdf %}
                     <a class="btn btn-primary"
-                       href="{{record.file_pdf.path}}"
+                       href="/download/{{record.file_pdf.id}}/{{record.file_pdf.file_name|url_encode}}"
                        download="{{record.file_pdf.file_name}}"
                        aria-label="Download {{record.name}} logo in PDF format">PDF</a>
                     {% endif %}

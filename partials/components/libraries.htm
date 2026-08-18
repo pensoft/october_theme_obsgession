@@ -41,7 +41,7 @@
 
         {%if record.file %}
         <div class="col-xs-12 col-md-3 end-xs end-md">
-            <a target="_blank" href="{{record.file.path}}#file_name={{record.file.file_name}}" class="btn btn-primary no-margin"><i class="pr normal p-download"></i>Download</a>
+            <a href="/download/{{record.file.id}}/{{record.file.file_name|url_encode}}" download="{{record.file.file_name}}" class="btn btn-primary no-margin"><i class="pr normal p-download"></i>Download</a>
         </div>
         {%endif%}
     </div>
