@@ -182,6 +182,7 @@
 @factsheet-media-height: 237px;
 @factsheet-media-radius: 118.5px; // half the height -- gives the pill ends
 @factsheet-media-bleed: 20vw;     // runs past the viewport, clipped by #layout-content
+@factsheet-media-gutter: 49px;    // half the 98px the design leaves between the text and the image
 
 // The two accent bands (Figma nodes 124:1322 green, 124:1328 blue). Same pill
 // shape and off-page bleed as an image band, at a little over half the height.
@@ -269,6 +270,19 @@
         }
     }
 
+    // The grid's own 0.5rem half-gutter is replaced on the two facing edges
+    // only, so the columns still line up with the container on the outside
+    // while the design's 98px opens up between the text and the image.
+    &--media-right &__body,
+    &--media-left &__media-col {
+        padding-right: @factsheet-media-gutter;
+    }
+
+    &--media-left &__body,
+    &--media-right &__media-col {
+        padding-left: @factsheet-media-gutter;
+    }
+
     &--media-right &__media,
     &--media-right &__accent {
         margin-right: -@factsheet-media-bleed;
@@ -296,13 +310,23 @@
     });
 }
 
-// Dropping the bleed on small screens needs to match the specificity of the
-// modifier rules above -- a media query adds none of its own.
+// Dropping the bleed and the wide gutter on small screens needs to match the
+// specificity of the modifier rules above -- a media query adds none of its
+// own. Once the columns stack there is nothing beside the text to hold apart,
+// so both go back to the grid's own half-gutter.
 .breakpoint-large-down({
     .factsheet-section--media-right .factsheet-section__media,
     .factsheet-section--media-left .factsheet-section__media {
         margin-left: 0;
         margin-right: 0;
+    }
+
+    .factsheet-section--media-right .factsheet-section__body,
+    .factsheet-section--media-left .factsheet-section__body,
+    .factsheet-section--media-right .factsheet-section__media-col,
+    .factsheet-section--media-left .factsheet-section__media-col {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
     }
 });
 
