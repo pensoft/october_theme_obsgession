@@ -183,6 +183,13 @@
 @factsheet-media-radius: 118.5px; // half the height -- gives the pill ends
 @factsheet-media-bleed: 20vw;     // runs past the viewport, clipped by #layout-content
 
+// The two accent bands (Figma nodes 124:1322 green, 124:1328 blue). Same pill
+// shape and off-page bleed as an image band, at a little over half the height.
+@factsheet-accent-height: 130px;
+@factsheet-accent-radius: 65px; // half the height -- the design's 118.5px clamps to this
+@factsheet-accent-green: rgba(178, 215, 134, 0.2);
+@factsheet-accent-blue: #ebf9fc;
+
 @factsheet-highlight-from: rgba(63, 195, 219, 0.1);
 @factsheet-highlight-to: rgba(178, 215, 134, 0.1);
 @factsheet-highlight-border: rgba(63, 195, 219, 0.4);
@@ -247,11 +254,28 @@
         }
     }
 
-    &--media-right &__media {
+    // Stands in for the image on the contribution and stakeholders bands: a
+    // flat tint, no content.
+    &__accent {
+        height: @factsheet-accent-height;
+        border-radius: @factsheet-accent-radius;
+
+        &--green {
+            background-color: @factsheet-accent-green;
+        }
+
+        &--blue {
+            background-color: @factsheet-accent-blue;
+        }
+    }
+
+    &--media-right &__media,
+    &--media-right &__accent {
         margin-right: -@factsheet-media-bleed;
     }
 
-    &--media-left &__media {
+    &--media-left &__media,
+    &--media-left &__accent {
         margin-left: -@factsheet-media-bleed;
     }
 
@@ -259,6 +283,14 @@
         &__media {
             height: 200px;
             border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        // Kept bleeding off the page edge once stacked -- with nothing inside
+        // it, the pill only reads as decoration if it runs past the margin.
+        &__accent {
+            height: 90px;
+            border-radius: 45px;
             margin-bottom: 25px;
         }
     });

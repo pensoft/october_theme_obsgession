@@ -20,12 +20,31 @@ function onStart()
 
     $this['factsheet'] = $factsheet;
 
+    // Two subsections are drawn without a photo: the design gives the
+    // contribution band a green pill and the stakeholders band a blue one in
+    // place of the image (Figma "OBSGESSION - Pilots", nodes 124:1322 and
+    // 124:1328). Matched on the title because the subsections carry no type of
+    // their own, and by substring so the wording can vary between pilots.
+    $accents = [
+        'contribution' => 'green',
+        'stakeholder' => 'blue',
+    ];
+
     // The richeditor stores each subsection as a run of block elements. Anything
     // past the first paragraph is folded behind a "Read more" toggle, so split
     // the HTML at the first closing tag rather than re-parsing it: the two
     // halves concatenate back to the original byte for byte, whatever markup
     // the editor produced.
-    $this['subsections'] = $factsheet->subsections->map(function ($subsection) {
+    $this['subsections'] = $factsheet->subsections->map(function ($subsection) use ($accents) {
+        $accent = null;
+
+        foreach ($accents as $needle => $colour) {
+            if (stripos((string) $subsection->title, $needle) !== false) {
+                $accent = $colour;
+                break;
+            }
+        }
+
         $html = (string) $subsection->description;
         $break = stripos($html, '</p>');
 
@@ -40,7 +59,11 @@ function onStart()
         return [
             'id' => $subsection->id,
             'title' => $subsection->title,
-            'image' => $subsection->image,
+            // An accent band never shows a photo, so any image uploaded
+            // against these subsections is dropped here rather than being
+            // filtered again in every branch of the template.
+            'image' => $accent ? null : $subsection->image,
+            'accent' => $accent,
             'lead' => $lead,
             'more' => $more,
         ];
@@ -70,11 +93,14 @@ function onStart()
 <main id="main-content" role="main" class="factsheet-detail">
 
     {# A subsection with an image becomes an alternating text/image band; one
-       without an image becomes the full-width highlight card. #}
+       without an image becomes the full-width highlight card. The two accent
+       subsections are bands too -- they take the same side of the page as a
+       photo would, so the left/right rhythm carries on through them, but the
+       media column holds a flat coloured pill instead of an image. #}
     {% set mediaCount = 0 %}
     {% for subsection in subsections %}
 
-        {% if subsection.image %}
+        {% if subsection.image or subsection.accent %}
             {% set mediaCount = mediaCount + 1 %}
             {% set mediaRight = mediaCount is odd %}
 
@@ -85,9 +111,13 @@ function onStart()
 
                         {% if not mediaRight %}
                         <div class="col-md-6 col-xs-12 factsheet-section__media-col">
+                            {% if subsection.accent %}
+                            <div class="factsheet-section__accent factsheet-section__accent--{{ subsection.accent }}" aria-hidden="true"></div>
+                            {% else %}
                             <div class="factsheet-section__media">
                                 <img src="{{ subsection.image.path }}" alt="{{ subsection.title }}">
                             </div>
+                            {% endif %}
                         </div>
                         {% endif %}
 
@@ -102,9 +132,13 @@ function onStart()
 
                         {% if mediaRight %}
                         <div class="col-md-6 col-xs-12 factsheet-section__media-col">
+                            {% if subsection.accent %}
+                            <div class="factsheet-section__accent factsheet-section__accent--{{ subsection.accent }}" aria-hidden="true"></div>
+                            {% else %}
                             <div class="factsheet-section__media">
                                 <img src="{{ subsection.image.path }}" alt="{{ subsection.title }}">
                             </div>
+                            {% endif %}
                         </div>
                         {% endif %}
 
