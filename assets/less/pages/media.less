@@ -214,8 +214,23 @@
     h2 {
         display: flex;
         align-items: flex-end;
-        // .text-center sets text-align, which cannot centre a flex item.
-        justify-content: center;
+        justify-content: flex-start;
+
+        // Titles here run to three lines, and centred text gives every line a
+        // different starting edge -- the eye has to re-find the start of each
+        // one. Left-aligned, matching the Pilots cards in pages/factsheets.less
+        // (.cs_wrapper). Centring stays for the short one- or two-word labels
+        // on the sibling listings.
+        text-align: left;
+
+        // Mirrors .flyer-container's box exactly, so the text's left edge lands
+        // on the image's left edge. Without this the title would start ~27px
+        // outside the image, since the image is 357px centred in a ~410px
+        // column.
+        width: 357px;
+        max-width: 100%;
+        margin-left: auto;
+        margin-right: auto;
 
         > span {
             display: -webkit-box;
@@ -230,11 +245,12 @@
     // The theme's own breakpoint-* mixins are keyed to 992/1200px and would
     // leave a 992-1024px gap, so match flexboxgrid's breakpoints directly.
     //
-    // How many lines to reserve depends on the column width, measured against
-    // the real 133-character worst case:
-    //   1024-1199px  .container 960px  -> ~304px column -> 4 lines
-    //   >= 1200px    .container 1280px -> ~410px column -> 3 lines
-    // em keeps the band tied to the h2's own font size.
+    // Four lines, which is what the real 133-character worst case wraps to in
+    // the 357px title box. One rule covers both desktop bands: the box is
+    // pinned to the image width rather than the column, so it is 357px at
+    // >= 1200px and clamped by max-width to the ~304px column between 1024 and
+    // 1199px -- and 133 characters needs four lines either way. em keeps the
+    // band tied to the h2's own font size.
     @media screen and (min-width: 64em) {
         h2 {
             min-height: 6em;
@@ -242,17 +258,6 @@
             > span {
                 -webkit-line-clamp: 4;
                 line-clamp: 4;
-            }
-        }
-    }
-
-    @media screen and (min-width: 75em) {
-        h2 {
-            min-height: 4.5em;
-
-            > span {
-                -webkit-line-clamp: 3;
-                line-clamp: 3;
             }
         }
     }
