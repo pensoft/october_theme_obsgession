@@ -1,0 +1,67 @@
+url = "/factsheets"
+layout = "default"
+title = "Factsheets"
+is_hidden = 0
+robot_index = "index"
+robot_follow = "follow"
+==
+<?php
+use Pensoft\Media\Models\Graphic;
+
+function onStart()
+{
+    // Backed by the Graphics module (Media center -> Graphics): its name +
+    // preview image + file is exactly the shape a factsheet card needs, so the
+    // page reads that model directly rather than introducing another one.
+    //
+    // Graphic uses the Sortable trait, whose global SortableScope already
+    // orders these by sort_order -- the order set in Media center -> Graphics
+    // -> Reorder. Both attachments are eager-loaded because the grid reads
+    // every record's image and file.
+    $this['factsheets'] = Graphic::with('image', 'file')->get();
+}
+?>
+==
+<main id="main-content" role="main">
+    <section class="container" aria-label="Factsheets">
+
+        {% if factsheets.count() %}
+        <div class="row">
+            {% for record in factsheets %}
+            {% spaceless %}
+
+            <article class="col-md-4 col-xs-12 mt-4">
+                <h2 class="text-center">{{ record.name }}</h2>
+                <div class="flyer-container">
+                    {# A record whose preview has not been uploaded yet still
+                       belongs on the page, so only the image is guarded here --
+                       not the whole card. #}
+                    {% if record.image %}
+                    <img src="{{ record.image.path }}" alt="{{ record.name }} factsheet">
+                    {% endif %}
+                </div>
+                <div class="links">
+                    {% if record.file %}
+                    {# Links through /download/:id/:filename rather than at the
+                       randomised storage path, so Matomo records a readable
+                       filename. See pages/download.htm. #}
+                    <a class="btn btn-primary"
+                       href="/download/{{ record.file.id }}/{{ record.file.file_name|url_encode }}"
+                       download="{{ record.file.file_name }}"
+                       aria-label="Download {{ record.name }}">Download</a>
+                    {% endif %}
+                </div>
+            </article>
+
+            {% endspaceless %}
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="col-xs-12 text-center" role="status">
+                <p>Items will follow soon. Keep posted!</p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</main>
