@@ -31,7 +31,15 @@ function onStart()
             {% spaceless %}
 
             <article class="col-md-4 col-xs-12 mt-4">
-                <h2 class="text-center">{{ record.name }}</h2>
+                {# The h2 is a fixed-height band (see .factsheets h2 in
+                   assets/less/pages/media.less) so every card's image and
+                   button line up whatever the title length. The clamp needs
+                   its own box -- display:-webkit-box cannot share an element
+                   with the display:flex doing the bottom-alignment -- hence
+                   the span. title= keeps the full text reachable if it clips. #}
+                <h2 class="text-center">
+                    <span title="{{ record.name }}">{{ record.name }}</span>
+                </h2>
                 <div class="flyer-container">
                     {# A record whose preview has not been uploaded yet still
                        belongs on the page, so only the image is guarded here --

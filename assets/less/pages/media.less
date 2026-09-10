@@ -179,3 +179,81 @@
         line-height: 1.5em;
     }
 }
+
+
+// --------------------------------------------------------------------------
+// Factsheets listing cards
+//
+// Scoped to the `factsheets` page id (layouts/default.htm puts
+// {{ this.page.id }} on .content-wrapper and #layout-content), so the sibling
+// media-centre listings that share .flyer-container / .links are untouched.
+//
+// .row already stretches the columns to equal height -- align-items defaults
+// to stretch in vendors/flexboxgrid. The misalignment is inside the card: it
+// is a plain block, so an 18px/1.5 title costs 27px per line and a one-line
+// vs three-line title shifts the image and button by ~54px.
+//
+// Fix is the theme's existing idiom (components/jumbotron.less .cs_title):
+// a fixed band with the text bottom-aligned, so short and long titles end on
+// the same baseline. Must come after the .flyer, .factsheets, ... h2 group
+// above -- equal specificity (0,1,1), so source order decides.
+// --------------------------------------------------------------------------
+.factsheets {
+
+    article {
+        display: flex;
+        flex-direction: column;
+    }
+
+    // Pins the button to the card floor, so a record still lines up even if it
+    // has no preview image or no file attached yet.
+    .links {
+        margin-top: auto;
+    }
+
+    h2 {
+        display: flex;
+        align-items: flex-end;
+        // .text-center sets text-align, which cannot centre a flex item.
+        justify-content: center;
+
+        > span {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+
+    // No reserved band below the 3-up grid: .col-md-4 only activates at 64em
+    // in flexboxgrid, so under that each card is full width and alone on its
+    // row -- there is nothing to align and the band would be dead space.
+    // The theme's own breakpoint-* mixins are keyed to 992/1200px and would
+    // leave a 992-1024px gap, so match flexboxgrid's breakpoints directly.
+    //
+    // How many lines to reserve depends on the column width, measured against
+    // the real 133-character worst case:
+    //   1024-1199px  .container 960px  -> ~304px column -> 4 lines
+    //   >= 1200px    .container 1280px -> ~410px column -> 3 lines
+    // em keeps the band tied to the h2's own font size.
+    @media screen and (min-width: 64em) {
+        h2 {
+            min-height: 6em;
+
+            > span {
+                -webkit-line-clamp: 4;
+                line-clamp: 4;
+            }
+        }
+    }
+
+    @media screen and (min-width: 75em) {
+        h2 {
+            min-height: 4.5em;
+
+            > span {
+                -webkit-line-clamp: 3;
+                line-clamp: 3;
+            }
+        }
+    }
+}
