@@ -379,13 +379,21 @@ function openModalBtn(){
         return;
     }
 
+    var $modal = $('#content-confirmation');
+
+    // Bind before opening; also remember the dismissal when the visitor follows a
+    // link inside the popup (e.g. the Rio collection button), since navigating
+    // away never fires the modal's hide events.
+    $modal.on('hide.bs.modal', function () {
+        setCookie('modalClosed', '1', 7);
+    });
+    $modal.on('click', 'a', function () {
+        setCookie('modalClosed', '1', 7);
+    });
+
     setTimeout(function() {
         $(".openModalBtn").trigger("click");
     }, 10);
-
-    $('#content-confirmation').on('hidden.bs.modal', function () {
-        setCookie('modalClosed', '1', 7);
-    });
 }
 
 // Cookie helper functions (add these if not already present)
